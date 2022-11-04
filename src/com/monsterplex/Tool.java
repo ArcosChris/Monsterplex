@@ -1,5 +1,5 @@
 package com.monsterplex;
 
 public interface Tool {
-    void ability();
+    void ability(Player player);
 }

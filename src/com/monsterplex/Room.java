@@ -5,34 +5,75 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Room {
-    private List<Tool> tools = new ArrayList<>();
-    private List<Weapon> = new ArrayList<>();
+    private static int nextId = 1;
+
+    public final int roomNumber;
+    private List<Tool> tools;
+    private List<Weapon> weapons = new ArrayList<>();
     private List<Token> tokens = new ArrayList<>();
     private List<Monster> monsters = new ArrayList<>();
     private boolean isLocked = false;
-    private Key key;
+
+    public Room(){
+        this.roomNumber = nextId++;
+        if(isLocked){
+            Key key = new Key(this);
+        }
+    }
 
     public Room(List<Tool> tools, List<Token> tokens, List<Monster> monsters){
+        this();
         setTools(tools);
         setTokens(tokens);
         setMonsters(monsters);
     }
 
-    public Room(List<Tool> tools, List<Token> tokens, List<Monster> monsters, boolean isLocked, Key key) {
+    public Room(List<Tool> tools, List<Token> tokens, List<Monster> monsters, boolean isLocked) {
         this(tools, tokens, monsters);
         setLocked(isLocked);
-        setKey(key);
     }
 
-    public void setTools(List<Tool> tools) {
+    public static int getNextId() {
+        return nextId;
+    }
+
+    private static void setNextId(int nextId) {
+        Room.nextId = nextId;
+    }
+
+    public int getRoomNumber() {
+        return roomNumber;
+    }
+
+    public List<Tool> getTools() {
+        return tools;
+    }
+
+    private void setTools(List<Tool> tools) {
         this.tools = tools;
     }
 
-    public void setTokens(List<Token> tokens) {
+    public List<Weapon> getWeapons() {
+        return weapons;
+    }
+
+    private void setWeapons(List<Weapon> weapons) {
+        this.weapons = weapons;
+    }
+
+    public List<Token> getTokens() {
+        return tokens;
+    }
+
+    private void setTokens(List<Token> tokens) {
         this.tokens = tokens;
     }
 
-    public void setMonsters(List<Monster> monsters) {
+    public List<Monster> getMonsters() {
+        return monsters;
+    }
+
+    private void setMonsters(List<Monster> monsters) {
         this.monsters = monsters;
     }
 
@@ -40,13 +81,7 @@ class Room {
         return isLocked;
     }
 
-    public void setLocked(boolean locked) {
+    private void setLocked(boolean locked) {
         isLocked = locked;
-    }
-
-    public void setKey(Key key) {
-        if(isLocked()){
-            this.key = key;
-        }
     }
 }

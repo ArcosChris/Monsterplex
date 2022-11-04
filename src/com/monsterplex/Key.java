@@ -1,18 +1,18 @@
 package com.monsterplex;
 
 public class Key {
-    public int roomNumber;
+    public int keyNumber;
 
     public Key (Room room) {
         setRoomNumber(room.roomNumber);
     };
 
     public int getRoomNumber() {
-        return roomNumber;
+        return keyNumber;
     }
 
     public void setRoomNumber(int roomNumber) {
-        this.roomNumber = roomNumber;
+        this.keyNumber = roomNumber;
     }
 
     @Override
