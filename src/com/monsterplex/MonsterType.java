@@ -22,5 +22,4 @@ public enum MonsterType {
     public String toString(){
         return getDisplay();
     }
-
 }
