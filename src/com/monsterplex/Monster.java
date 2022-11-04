@@ -3,7 +3,7 @@ package com.monsterplex;
 class Monster extends Character{
     public MonsterType monster;
     public int position;
-    public Attack attack;
+    //public Attack attack;
 
     public Monster(double health) {
         super(health);
@@ -25,13 +25,13 @@ class Monster extends Character{
         this.position = position;
     }
 
-    public Attack getAttack() {
-        return attack;
-    }
-
-    public void setAttack(Attack attack) {
-        this.attack = attack;
-    }
+//   public Attack getAttack() {
+//        return attack;
+//    }
+//
+//    public void setAttack(Attack attack) {
+//        this.attack = attack;
+//    }
 
     public void attackPlayer(Player player){
         System.out.println("Attacked player");

@@ -15,6 +15,10 @@ public class Player extends Character {
     private List<Tool> tools = new ArrayList<Tool>();
     private List<Key> keys = new ArrayList<Key>();
 
+    public Player(double health) {
+        super(health);
+    }
+
     public void attack(Weapon weapon, Monster monster){
 
     }
@@ -23,7 +27,7 @@ public class Player extends Character {
     }
 
     public Character getCharacter() {
-        return Null;
+        return null;
     }
 
     public String getName() {
