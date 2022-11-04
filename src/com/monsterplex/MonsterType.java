@@ -8,7 +8,7 @@ public enum MonsterType {
     MUTANT("Mutant"),
     CHUPACABRA("Chupacabra");
 
-    private String display;
+    private final String display;
 
     MonsterType(String display){
         this.display = display;
