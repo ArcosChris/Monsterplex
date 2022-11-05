@@ -5,9 +5,15 @@ public abstract class Character {
     public static final double MAX_HEALTH = 100;
     public double health = 100.0;
 
+
+    public Character() {
+
+    }
+
     public Character(double health) {
         setHealth(health);
     }
+
 
     public double getHealth() {
         return health;
@@ -16,4 +22,5 @@ public abstract class Character {
     public void setHealth(double health) {
         this.health = health;
     }
+
 }

@@ -10,7 +10,5 @@ class Main {
         Map testing = new Map();
         testing.loadMap(1,2);
 
-
-
     }
 }
