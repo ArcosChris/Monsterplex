@@ -10,14 +10,11 @@ class Potion implements Tool{
     @Override
     public void ability(Player player) {
 
-//        int health = player.getHealth();
+        double health = player.getHealth();
 
-//        if(health < Player.MAX_HEALTH){
-//            health == Player.MAX_HEALTH;
-//        }
-
-        // if health is less than 100 will increase back up to 100
-        // will not exceed 100 ever
+        if(health < Player.MAX_HEALTH){
+            player.health = Player.MAX_HEALTH;
+        }
     }
 
     public String getDescription() {
