@@ -3,6 +3,7 @@ package com.monsterplex;
 public enum MonsterType {
 
     CYCLOPS("Cyclops"),
+    POSSESSED_BEAR("Possessed Bear"),
     ZOMBIE("Zombie"),
     REAPERS("Reaper"),
     MUTANT("Mutant"),

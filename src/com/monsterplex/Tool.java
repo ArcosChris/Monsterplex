@@ -1,5 +1,5 @@
 package com.monsterplex;
 
-public interface Tool {
-    void ability(Player player);
+interface Tool {
+    public abstract void ability(Player player);
 }

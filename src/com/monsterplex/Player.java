@@ -1,10 +1,11 @@
 package com.monsterplex;
 
-import javax.tools.Tool;
 import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+
 
 public class Player extends Character {
     private String name;
@@ -15,14 +16,27 @@ public class Player extends Character {
     private List<Tool> tools = new ArrayList<Tool>();
     private List<Key> keys = new ArrayList<Key>();
 
+    public boolean hasArmor = false;
+    public double armorHealth = Armor.NO_ARMOR_HEALTH;
+
+
+    public Player() {
+
+    }
+
     public Player(double health) {
         super(health);
     }
 
-    public void attack(Weapon weapon, Monster monster){
+    public void useTool(Tool tool){
+        tool.ability(this);
+    }
+
+    public void attack(Weapon weapon, Monster monster) {
 
     }
-    public void getAttacked (Monster monster){
+
+    public void getAttacked(Monster monster) {
 
     }
 
@@ -84,5 +98,13 @@ public class Player extends Character {
 
     private void setKeys(List<Key> keys) {
         this.keys = keys;
+    }
+
+    public double getArmorHealth() {
+        return armorHealth;
+    }
+
+    public void setArmorHealth(double armourHealth) {
+        this.armorHealth = armourHealth;
     }
 }
