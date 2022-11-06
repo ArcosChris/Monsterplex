@@ -10,40 +10,40 @@ import java.util.Map;
 public class Player extends Character {
     private String name;
     private int tokens;
-    private int currentPosition;
+    private int[] currentPosition;
     private Map map;
-    private List<Weapon> weapons = new ArrayList<Weapon>();
-    private List<Tool> tools = new ArrayList<Tool>();
-    private List<Key> keys = new ArrayList<Key>();
+
+    //TODO: player will not have many of these but will pick up. Setters should be adding to this list not
+    //replacing full list - LOOK AT SET WEAPON METHOD
+    // ADD TO LIST METHOD AND A REMOVE FROM LIST
+    private List<Weapon> weapons = new ArrayList<>();
+    private List<Tool> tools = new ArrayList<>();
+    private List<Key> keys = new ArrayList<>();
+
+
+    //TODO every player starts with a stick
+    private final WeaponType currentWeapon = WeaponType.AXE;
 
     public boolean hasArmor = false;
     public double armorHealth = Armor.NO_ARMOR_HEALTH;
 
 
-    public Player() {
-
+    public Player(String name){
+        setName(name);
     }
 
-    public Player(double health) {
-        super(health);
+    //actions methods
+    //TODO
+    public void attack(Monster target){
+
     }
 
     public void useTool(Tool tool){
         tool.ability(this);
     }
 
-    public void attack(Weapon weapon, Monster monster) {
 
-    }
-
-    public void getAttacked(Monster monster) {
-
-    }
-
-    public Character getCharacter() {
-        return null;
-    }
-
+    //accessors
     public String getName() {
         return name;
     }
@@ -60,14 +60,6 @@ public class Player extends Character {
         this.tokens = tokens;
     }
 
-    public int getCurrentPosition() {
-        return currentPosition;
-    }
-
-    private void setCurrentPosition(int currentPosition) {
-        this.currentPosition = currentPosition;
-    }
-
     public Map getMap() {
         return map;
     }
@@ -80,8 +72,8 @@ public class Player extends Character {
         return weapons;
     }
 
-    private void setWeapons(List<Weapon> weapons) {
-        this.weapons = weapons;
+    private void setWeapons(Weapon weapon) {
+        this.weapons.add(weapon);
     }
 
     public List<Tool> getTools() {
