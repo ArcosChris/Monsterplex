@@ -1,6 +1,6 @@
 package com.monsterplex;
 
-class Potion implements Tool{
+class Potion implements Tool {
     public String description;
 
     public Potion(String description) {

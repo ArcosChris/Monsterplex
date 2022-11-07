@@ -6,44 +6,46 @@ import java.util.List;
 import java.util.Map;
 
 
-
 public class Player extends Character {
     private String name;
     private int tokens;
-    private int currentPosition;
-    private Map map;
-    private List<Weapon> weapons = new ArrayList<Weapon>();
-    private List<Tool> tools = new ArrayList<Tool>();
-    private List<Key> keys = new ArrayList<Key>();
+    private int[] currentPosition;
+    private final UserMap userMap = new UserMap();
+
+    //TODO: player will not have many of these but will pick up. Setters should be adding to this list not
+    //replacing full list - LOOK AT SET WEAPON METHOD
+    // ADD TO LIST METHOD AND A REMOVE FROM LIST
+    private final List<Weapon> weapons = new ArrayList<>();
+    private List<Tool> tools = new ArrayList<>();
+    private List<Key> keys = new ArrayList<>();
+
+
+    private final WeaponType currentWeapon = WeaponType.STICK;
 
     public boolean hasArmor = false;
     public double armorHealth = Armor.NO_ARMOR_HEALTH;
 
-
-    public Player() {
-
+    public Player(String name) {
+        setName(name);
     }
 
-    public Player(double health) {
-        super(health);
+    //actions methods
+    public void attack(Monster target) {
+
+        if (target.getHealth() <= MIN_HEALTH) {
+            target.isDead = true;
+            System.out.println("Monster is dead");
+
+        } else {
+            target.setHealth(target.health  - currentWeapon.getDamage());
+        }
     }
 
-    public void useTool(Tool tool){
+    public void useTool(Tool tool) {
         tool.ability(this);
     }
 
-    public void attack(Weapon weapon, Monster monster) {
-
-    }
-
-    public void getAttacked(Monster monster) {
-
-    }
-
-    public Character getCharacter() {
-        return null;
-    }
-
+    //accessors
     public String getName() {
         return name;
     }
@@ -60,28 +62,12 @@ public class Player extends Character {
         this.tokens = tokens;
     }
 
-    public int getCurrentPosition() {
-        return currentPosition;
-    }
-
-    private void setCurrentPosition(int currentPosition) {
-        this.currentPosition = currentPosition;
-    }
-
-    public Map getMap() {
-        return map;
-    }
-
-    private void setMap(Map map) {
-        this.map = map;
-    }
-
     public List<Weapon> getWeapons() {
         return weapons;
     }
 
-    private void setWeapons(List<Weapon> weapons) {
-        this.weapons = weapons;
+    private void setWeapons(Weapon weapon) {
+        this.weapons.add(weapon);
     }
 
     public List<Tool> getTools() {

@@ -1,44 +1,39 @@
 package com.monsterplex;
 
-class Monster extends Character{
-    public MonsterType monster;
+public class Monster extends Character{
+    public MonsterType monsterType  ;
     public int position;
-    //public Attack attack;
 
-    public Monster(double health) {
-        super(health);
+    public Monster(MonsterType monster) {
+      this.monsterType = monster;
     }
 
-    public MonsterType getMonster() {
-        return monster;
+    public void attack(Player target){
+
+        if(target.hasArmor){
+            target.setArmorHealth(target.armorHealth - 1);
+        }
+
+        // should only be called when Monster is attacked by player
+        if(target.health <= MIN_HEALTH){
+            target.isDead = true;
+            System.out.println("Player is dead");
+        }
+        else {
+            target.setHealth(target.getHealth() - Attack.BITE.getDamage());
+        }
     }
 
     public int getPosition() {
         return position;
     }
 
-    public void setMonster(MonsterType monster) {
-        this.monster = monster;
-    }
-
     public void setPosition(int position) {
         this.position = position;
     }
 
-//   public Attack getAttack() {
-//        return attack;
-//    }
-//
-//    public void setAttack(Attack attack) {
-//        this.attack = attack;
-//    }
-
-    public void attackPlayer(Player player){
-        System.out.println("Attacked player");
-    }
-
     @Override
     public String toString(){
-        return String.format("MonsterType: %s, Health: %s, ", getMonster(), getHealth());
+        return String.format("MonsterType: %s, Health: %s, TEST",  getHealth());
     }
 }
