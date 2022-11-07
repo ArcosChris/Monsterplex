@@ -10,6 +10,10 @@ public class Monster extends Character{
 
     public void attack(Player target){
 
+        if(target.hasArmor){
+            target.setArmorHealth(target.armorHealth - 1);
+        }
+
         // should only be called when Monster is attacked by player
         if(target.health <= MIN_HEALTH){
             target.isDead = true;

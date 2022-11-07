@@ -10,12 +10,12 @@ public class Player extends Character {
     private String name;
     private int tokens;
     private int[] currentPosition;
-    private Map map;
+    private final UserMap userMap = new UserMap();
 
     //TODO: player will not have many of these but will pick up. Setters should be adding to this list not
     //replacing full list - LOOK AT SET WEAPON METHOD
     // ADD TO LIST METHOD AND A REMOVE FROM LIST
-    private List<Weapon> weapons = new ArrayList<>();
+    private final List<Weapon> weapons = new ArrayList<>();
     private List<Tool> tools = new ArrayList<>();
     private List<Key> keys = new ArrayList<>();
 
@@ -45,7 +45,6 @@ public class Player extends Character {
         tool.ability(this);
     }
 
-
     //accessors
     public String getName() {
         return name;
@@ -61,14 +60,6 @@ public class Player extends Character {
 
     private void setTokens(int tokens) {
         this.tokens = tokens;
-    }
-
-    public Map getMap() {
-        return map;
-    }
-
-    private void setMap(Map map) {
-        this.map = map;
     }
 
     public List<Weapon> getWeapons() {
