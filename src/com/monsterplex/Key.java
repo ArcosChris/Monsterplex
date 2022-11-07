@@ -3,20 +3,20 @@ package com.monsterplex;
 public class Key {
     public int keyNumber;
 
-    public Key (Room room) {
-        setRoomNumber(room.roomNumber);
+    public Key(Room room) {
+        setKeyNumber(room.getRoomNumber());
     };
 
-    public int getRoomNumber() {
+    public int getKeyNumber() {
         return keyNumber;
     }
 
-    public void setRoomNumber(int roomNumber) {
+    public void setKeyNumber(int roomNumber) {
         this.keyNumber = roomNumber;
     }
 
     @Override
     public String toString(){
-        return String.format("RoomNumber: %s", getRoomNumber());
+        return String.format("RoomNumber: %s", getKeyNumber());
     }
 }

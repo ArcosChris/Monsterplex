@@ -1,0 +1,9 @@
+
+O- You
+$ - Money                        N
+* - Key                          |
+? - Riddle to Enter         W -- + -- E
+% - Locked Room                  |
+/ - Open Room                    S
+# - Picture
++ - Exit
