@@ -11,12 +11,11 @@ public abstract class Character {
     }
 
     public void setHealth(double health) {
-        //TODO if health 0 or less character is dead.
-        if(health <= MIN_HEALTH){
 
-        }
-
+        if (health <= MIN_HEALTH) {
+            isDead = true;
+        } else {
             this.health = health;
+        }
     }
-
 }

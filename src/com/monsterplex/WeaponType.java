@@ -1,6 +1,7 @@
 package com.monsterplex;
 
 public enum WeaponType {
+    STICK("Stick", 2.0),
     HAMMER("Hammer",5.0),
     SWORD("Sword",15.0),
     AXE("Axe", 30.0),

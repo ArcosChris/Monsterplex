@@ -1,4 +1,5 @@
 package com.monsterplex.app;
 
-class MonsterplexApp {
+class MonsterplexApp  {
+
 }

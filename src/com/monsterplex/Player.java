@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 
-
 public class Player extends Character {
     private String name;
     private int tokens;
@@ -21,24 +20,28 @@ public class Player extends Character {
     private List<Key> keys = new ArrayList<>();
 
 
-    //TODO every player starts with a stick
-    private final WeaponType currentWeapon = WeaponType.AXE;
+    private final WeaponType currentWeapon = WeaponType.STICK;
 
     public boolean hasArmor = false;
     public double armorHealth = Armor.NO_ARMOR_HEALTH;
 
-
-    public Player(String name){
+    public Player(String name) {
         setName(name);
     }
 
     //actions methods
-    //TODO
-    public void attack(Monster target){
+    public void attack(Monster target) {
 
+        if (target.getHealth() <= MIN_HEALTH) {
+            target.isDead = true;
+            System.out.println("Monster is dead");
+
+        } else {
+            target.setHealth(target.health  - currentWeapon.getDamage());
+        }
     }
 
-    public void useTool(Tool tool){
+    public void useTool(Tool tool) {
         tool.ability(this);
     }
 
