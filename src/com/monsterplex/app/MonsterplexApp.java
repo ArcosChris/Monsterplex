@@ -3,6 +3,7 @@ package com.monsterplex.app;
 import com.apps.util.Prompter;
 import com.apps.util.Console;
 import com.monsterplex.Player;
+import com.monsterplex.UserMap;
 
 import java.io.*;
 import java.util.Scanner;
@@ -15,12 +16,15 @@ import java.util.Scanner;
 public class MonsterplexApp {
     Prompter prompter = new Prompter(new Scanner(System.in));
     Player player = null;
+    UserMap playerMap= null;
 
     public void execute() {
         welcome();
         String name = promptUserForName();
         player = Player.create(name);
+        playerMap = new UserMap(player);
         printDirections();
+        showMap();
 
     }
 
@@ -51,8 +55,8 @@ public class MonsterplexApp {
         }
     }
 
-    private void startGame(){
-
+    private void showMap(){
+        playerMap.show();
     }
 
 }

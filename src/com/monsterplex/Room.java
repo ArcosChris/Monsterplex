@@ -19,7 +19,6 @@ class Room {
 
     private final int roomNumber;
     private boolean isLocked = false;
-    private Key roomKey;
 
     public void addNewFeature(Feature newFeature){
         addFeaturesToRoom(newFeature);
@@ -42,13 +41,6 @@ class Room {
                 .collect(Collectors.toList());
     }
 
-    public Key getRoomKey() {
-        if (isLocked) {
-            return roomKey;
-        }
-        return null;
-    }
-
     public int getRoomNumber() {
         return roomNumber;
     }
@@ -58,9 +50,6 @@ class Room {
     }
 
     public void setLocked(boolean isLocked) {
-        if (isLocked) {
-            roomKey = new Key(this);
-        }
         this.isLocked = isLocked;
     }
 
