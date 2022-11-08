@@ -12,15 +12,26 @@ public class UserMap {
     private final List<StringBuilder> legend = Reader.readFileToArrayList("images/mapLegend.txt");
     private final List<Room> rooms = new ArrayList<>();
     private final int mapLength = mapStructure.get(0).length();
-    private final int mapWidth = mapStructure.size();
+    private final int[] exitCode = new int[4];
+    private final List<Integer> codeShownToUser = new ArrayList<>();
 
-    private Player player = null;
     private int[] currentPosition = new int[]{1, mapStructure.size() - 2};
 
-    public UserMap(Player player) {
-        this.player = player;
+    public static UserMap create(){
+        return new UserMap();
+    }
+
+    private UserMap() {
+        generateRandomExitCode();
         setMapLegendItems();
         setRoomPositions();
+    }
+
+    private void generateRandomExitCode() {
+        for (int i =0; i < exitCode.length; i++){
+          int randomNumber = new Random().nextInt(9);
+          exitCode[i] = randomNumber;
+        }
     }
 
     public void show() {
@@ -38,7 +49,7 @@ public class UserMap {
         int x = currentPosition[0];
         int y = currentPosition[1];
 
-        switch (userInput) {
+        switch (userInput.toUpperCase()) {
             case "N":
                 y -= 1;
                 break;
@@ -59,7 +70,6 @@ public class UserMap {
         if (!validPosition(x, y)) {
             System.out.println("Hmm.. there seems to be a wall there. Let's try a different route.");
         } else {
-            //clear previous position
             setInCoordinate(currentPosition[0], currentPosition[1], ' ');
             this.currentPosition = new int[]{x, y};
             setInCoordinate(x, y, PLAYER.symbol());
@@ -78,9 +88,12 @@ public class UserMap {
             int col = item[0];
             int row = item[1];
 
-            if (characterAtPosition(col, row) == MONSTER.symbol()) {
-                System.out.println("Monster spotted...");
+            char itemInPosition = characterAtPosition(col, row);
 
+            for(Feature feature : Feature.values()){
+                if(itemInPosition == feature.symbol()){
+//                    return itemInPosition;
+                }
             }
         }
     }
