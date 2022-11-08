@@ -12,12 +12,12 @@ public class Player extends Character {
 
     private String name;
     //User inventory
-    private List<Weapon> weapons = new ArrayList<>();
-    private List<Tool> tools = new ArrayList<>();
+    private final List<Weapon> weapons = new ArrayList<>();
 
+    private List<Tool> tools = new ArrayList<>();
     private boolean hasArmor = false;
     private boolean hasKey = false;
-    private double armorHealth = Armor.NO_ARMOR_HEALTH;
+    public double armorHealth = Armor.NO_ARMOR_HEALTH;
 
     private final WeaponType currentWeapon = WeaponType.STICK;
 
