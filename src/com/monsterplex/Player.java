@@ -35,7 +35,6 @@ public class Player extends Character {
 
     public void useTool(Tool tool) {
         tool.ability(this);
-        tools.remove(tool);
     }
 
     public void addWeapon(Weapon weapon){
@@ -44,6 +43,10 @@ public class Player extends Character {
 
     public void addTool(Tool tool){
         tools.add(tool);
+    }
+
+    public void removeTool (Tool tool){
+        tools.remove(tool);
     }
 
     public List<Inventory> getUserInventory(){
