@@ -6,12 +6,13 @@ public abstract class Character {
     public double health = 100.0;
     public boolean isDead = false;
 
+    public Character(){}
+
     public double getHealth() {
         return health;
     }
 
     public void setHealth(double health) {
-
         if (health <= MIN_HEALTH) {
             isDead = true;
         } else {

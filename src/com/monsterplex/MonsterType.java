@@ -1,13 +1,14 @@
 package com.monsterplex;
 
+import java.util.Random;
+
 public enum MonsterType {
 
     CYCLOPS("Cyclops"),
-    POSSESSED_BEAR("Possessed Bear"),
+    GHOST("Ghost"),
     ZOMBIE("Zombie"),
-    REAPERS("Reaper"),
-    MUTANT("Mutant"),
-    CHUPACABRA("Chupacabra");
+    CHUPACABRA("Chupacabra"),
+    VAMPIRE("Vampire");
 
     private final String display;
 
@@ -17,7 +18,12 @@ public enum MonsterType {
 
     public String getDisplay(){
         return display;
-    };
+    }
+
+    public static MonsterType getRandomMonster() {
+        int random = new Random().nextInt(Attack.values().length);
+        return MonsterType.values()[random];
+    }
 
     @Override
     public String toString(){

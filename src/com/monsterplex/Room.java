@@ -17,7 +17,6 @@ class Room {
     public static final int roomLength = 11; //roomStructure.get(0).length();
     public static final int roomWidth = 6; //roomStructure.size();
 
-    private List<Feature> features = new ArrayList<>();
     private final int roomNumber;
     private boolean isLocked = false;
     private Key roomKey;
@@ -77,12 +76,17 @@ class Room {
 
     private void addFeatures() {
         for (Feature feature : roomFeatures()) {
-           addFeaturesToRoom(feature);
+           if(hasFeature() || feature.equals(MONSTER) || feature.equals(PICTURE)) {
+               addFeaturesToRoom(feature);
+           }
         }
     }
 
+    private boolean hasFeature() {
+        return Math.random() < 0.5;
+    }
+
     private void addFeaturesToRoom(Feature feature){
-        features.add(feature);
         int[] coordinates = getFeatureCoordinates();
         StringBuilder line = roomStructure.get(coordinates[0]);  // line 1-4
         line.setCharAt(coordinates[1], feature.symbol());     // character 1-10

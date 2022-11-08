@@ -5,11 +5,12 @@ import java.util.List;
 import java.util.Random;
 
 public enum Feature {
-    MONEY('$'),
     KEY('*'),
     MONSTER('M'),
     RIDDLE('?'),
     PICTURE('#'),
+    WEAPON('W'),
+    TOOL('T'),
     EXIT('+'),
     PLAYER('O'),
     HEADER('_'),
@@ -30,7 +31,7 @@ public enum Feature {
     }
 
     public static List<Feature> roomFeatures(){
-        return new ArrayList<>(List.of(MONEY, MONSTER, PICTURE));
+        return new ArrayList<>(List.of(WEAPON, TOOL, MONSTER, PICTURE));
     }
 
     public char symbol() {

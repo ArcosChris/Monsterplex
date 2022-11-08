@@ -3,10 +3,7 @@ package com.monsterplex;
 import com.monsterplex.util.Randomizer;
 import com.monsterplex.util.Reader;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.monsterplex.Feature.*;
 
@@ -14,14 +11,14 @@ public class UserMap {
     private final List<StringBuilder> mapStructure = Reader.readFileToArrayList("images/map.txt");
     private final List<StringBuilder> legend = Reader.readFileToArrayList("images/mapLegend.txt");
     private final List<Room> rooms = new ArrayList<>();
-    private final List<Feature> itemsInMap = new ArrayList<>();
-    private final Map<Room, Key> roomKeyMap = new HashMap<>();
-
     private final int mapLength = mapStructure.get(0).length();
     private final int mapWidth = mapStructure.size();
+
+    private Player player = null;
     private int[] currentPosition = new int[]{1, mapStructure.size() - 2};
 
-    public UserMap() {
+    public UserMap(Player player) {
+        this.player = player;
         setMapLegendItems();
         setRoomPositions();
     }
@@ -66,30 +63,37 @@ public class UserMap {
             setInCoordinate(currentPosition[0], currentPosition[1], ' ');
             this.currentPosition = new int[]{x, y};
             setInCoordinate(x, y, PLAYER.symbol());
+            checkUserSurroundingsForMonster(x, y);
         }
     }
 
+    private void checkUserSurroundingsForMonster(int x, int y) {
+        List<int[]> surroundings = new ArrayList<>();
+        surroundings.add(new int[]{x, y + 1});
+        surroundings.add(new int[]{x, y - 1});
+        surroundings.add(new int[]{x - 1, y});
+        surroundings.add(new int[]{x + 1, y});
+
+        for (int[] item : surroundings) {
+            int col = item[0];
+            int row = item[1];
+
+            if (characterAtPosition(col, row) == MONSTER.symbol()) {
+                System.out.println("Monster spotted...");
+
+            }
+        }
+    }
+
+
     private void setRoomPositions() {
         createRoomsBasedOnMap();
-
-        Key previousRoomKey = null;
-        Room previousRoom = null;
         int startingX = 2;
         int roomCount = 0;
 
         for (Room room : rooms) {
-            if(previousRoomKey != null){
-                room.addNewFeature(KEY);
-                roomKeyMap.put(previousRoom, previousRoomKey);
-                previousRoom = null;
-                previousRoomKey = null;
-            }
-
             int randomRoomLineY = Randomizer.randomPosition(Room.roomWidth - 2) + 1; //only on lines 1-4
             int randomRoomExitX = Math.random() > 0.5 ? 0 : Room.roomLength;
-
-            previousRoomKey = room.isLocked() ? room.getRoomKey() : null;
-            previousRoom = room.isLocked() ? room : null;
 
             int startingY = Math.random() < 0.5 ? 2 : 8; //random select top or bottom of map(room can't be outside)
 
@@ -99,8 +103,8 @@ public class UserMap {
                 char[] lineItems = room.imageLines().get(i).toCharArray();
 
                 for (int j = 0; j < lineItems.length; j++) {
-                    if(randomRoomLineY == i && randomRoomExitX == j) {
-                        lineItems[j] = previousRoomKey != null ? Feature.LOCKED.symbol() : Feature.randomEntrance().symbol();
+                    if (randomRoomLineY == i && randomRoomExitX == j) {
+                        lineItems[j] = room.isLocked()? Feature.LOCKED.symbol() : Feature.randomEntrance().symbol();
                     }
                     int position = ((roomCount * (Room.roomLength + 3)) + (startingX));
                     setInCoordinate(position, startingY, lineItems[j]);
@@ -122,7 +126,7 @@ public class UserMap {
         return isValid;
     }
 
-    private void createRoomsBasedOnMap(){
+    private void createRoomsBasedOnMap() {
         int amountOfRooms = (mapLength - 2) / (Room.roomLength + 2);
         for (int i = 0; i < amountOfRooms; i++) {
             if (i % 2 == 0) {
@@ -150,5 +154,9 @@ public class UserMap {
 
     private void setInCoordinate(int x, int y, char symbol) {
         mapStructure.get(y).setCharAt(x, symbol);
+    }
+
+    private char characterAtPosition(int x, int y) {
+        return mapStructure.get(y).charAt(x);
     }
 }
