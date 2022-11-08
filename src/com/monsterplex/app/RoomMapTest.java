@@ -1,5 +1,8 @@
 package com.monsterplex.app;
 
+import com.monsterplex.InMemoryRiddleHolder;
+import com.monsterplex.Player;
+import com.monsterplex.Riddle;
 import com.monsterplex.UserMap;
 
 import java.util.Scanner;
@@ -7,8 +10,16 @@ import java.util.Scanner;
 class RoomMapTest {
     private static final Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
-        UserMap test = new UserMap();
-        test.show();
+
+
+//        Riddle test1 = InMemoryRiddleHolder.getRandomRiddle();
+//        System.out.println(test1.getAnswer());
+//        System.out.println(test1.getRiddle());
+
+        Player player = Player.create("Chris");
+        UserMap map = new UserMap(player);
+
+        map.show();
 
         System.out.println("Please enter a direction to continue");
         System.out.println("N, E, S, W");
@@ -16,8 +27,6 @@ class RoomMapTest {
         boolean validInput = false;
         while(validInput == false){
             String input = scanner.nextLine().toUpperCase();
-
-            //NESW - map directions I - inventory
 
             if(input.matches("[NESWI]")){
                 //validInput = true;
@@ -27,7 +36,7 @@ class RoomMapTest {
                     case "E":
                     case "S":
                     case "W":
-                        test.setUserPosition(input);
+                        map.setUserPosition(input);
                         break;
                     case "I":
                         System.out.println("No inventory");
@@ -36,7 +45,7 @@ class RoomMapTest {
                         System.out.println("Please enter valid command.");
                 }
             }
-            test.show();
+            map.show();
         }
     }
 }

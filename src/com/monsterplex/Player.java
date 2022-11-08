@@ -3,26 +3,25 @@ package com.monsterplex;
 import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
 
 public class Player extends Character {
-    private String name;
-    private int tokens;
-    private int[] currentPosition;
-    private final UserMap userMap = new UserMap();
 
-    //TODO: player will not have many of these but will pick up. Setters should be adding to this list not
-    //replacing full list - LOOK AT SET WEAPON METHOD
-    // ADD TO LIST METHOD AND A REMOVE FROM LIST
+    public static Player create(String name){
+        return new Player(name);
+    }
+
+    private String name;
+    //User inventory
     private final List<Weapon> weapons = new ArrayList<>();
+
     private List<Tool> tools = new ArrayList<>();
-    private List<Key> keys = new ArrayList<>();
-    private final WeaponType currentWeapon = WeaponType.STICK;
-    public boolean hasArmor = false;
+    private boolean hasArmor = false;
+    private boolean hasKey = false;
     public double armorHealth = Armor.NO_ARMOR_HEALTH;
 
-    public Player(String name) {
+    private final WeaponType currentWeapon = WeaponType.STICK;
+
+    private Player(String name){
         setName(name);
     }
 
@@ -31,10 +30,25 @@ public class Player extends Character {
         target.setHealth(target.health - currentWeapon.getDamage());
         MonsterType monsterAttacked = target.getMonsterType();
         System.out.printf("You attacked %s : %s current health: %s", monsterAttacked, monsterAttacked, target.getHealth());
+        target.attack(this);
     }
 
     public void useTool(Tool tool) {
         tool.ability(this);
+        tools.remove(tool);
+    }
+
+    public void addWeapon(Weapon weapon){
+        weapons.add(weapon);
+    }
+
+    public void addTool(Tool tool){
+        tools.add(tool);
+    }
+
+    //show all weapons and tools
+    public void getUserInventory(){
+
     }
 
     //accessors
@@ -46,36 +60,12 @@ public class Player extends Character {
         this.name = name;
     }
 
-    public int getTokens() {
-        return tokens;
+    public boolean hasKey(){
+        return this.hasKey;
     }
 
-    private void setTokens(int tokens) {
-        this.tokens = tokens;
-    }
-
-    public List<Weapon> getWeapons() {
-        return weapons;
-    }
-
-    private void setWeapons(Weapon weapon) {
-        this.weapons.add(weapon);
-    }
-
-    public List<Tool> getTools() {
-        return tools;
-    }
-
-    private void setTools(List<Tool> tools) {
-        this.tools = tools;
-    }
-
-    public List<Key> getKeys() {
-        return keys;
-    }
-
-    private void setKeys(List<Key> keys) {
-        this.keys = keys;
+    public void setHasKey(boolean hasKey){
+        this.hasKey = hasKey;
     }
 
     public boolean hasArmor() {

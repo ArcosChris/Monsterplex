@@ -11,7 +11,7 @@ public class Monster extends Character{
         Attack randomAttack = Attack.getRandomAttack();
         int force = Force.get();
 
-        if(target.hasArmor){
+        if(target.hasArmor()){
             target.setArmorHealth(target.armorHealth - Armor.armorDamage);
             System.out.printf("%s uses attack %s. Your armor health is now: %s", getMonsterType(), randomAttack, target.getArmorHealth());
         }

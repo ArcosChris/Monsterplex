@@ -1,5 +1,7 @@
 package com.monsterplex;
 
+import java.util.Random;
+
 public enum WeaponType {
     STICK("Stick", 2.0),
     HAMMER("Hammer",5.0),
@@ -22,6 +24,11 @@ public enum WeaponType {
 
     public double getDamage(){
         return damage;
+    }
+
+    public static WeaponType getRandomWeaponType() {
+        int random = new Random().nextInt(Attack.values().length);
+        return WeaponType.values()[random];
     }
 
     @Override

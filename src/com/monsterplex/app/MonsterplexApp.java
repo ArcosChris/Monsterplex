@@ -1,21 +1,27 @@
 package com.monsterplex.app;
 
 import com.apps.util.Prompter;
+import com.apps.util.Console;
+import com.monsterplex.Player;
 
 import java.io.*;
 import java.util.Scanner;
-import java.util.Scanner;
+
 
 /**
  * Controller - directs flow of an app like user promp,
  * sending provided inputs to system classes
  */
 public class MonsterplexApp {
-//    private final Scanner scanner = new Scanner(System.in);
     Prompter prompter = new Prompter(new Scanner(System.in));
+    Player player = null;
 
     public void execute() {
         welcome();
+        String name = promptUserForName();
+        player = Player.create(name);
+        printDirections();
+
     }
 
     private void welcome() {
@@ -32,4 +38,21 @@ public class MonsterplexApp {
             e.printStackTrace();
         }
     }
+
+    private String promptUserForName(){
+       return prompter.prompt("PLEASE ENTER YOUR NAME TO BEGIN: ", "[a-zA-Z]+", "\nName should only have letters.\n");
+    }
+
+    private void printDirections(){
+        String directions = String.format("Welcome, %s. The game rules are very simple... just don't die. You have 10 minutes to escape.", player.getName());
+        for (char c : directions.toCharArray()) {
+            Console.pause(100);
+            System.out.print(c);
+        }
+    }
+
+    private void startGame(){
+
+    }
+
 }

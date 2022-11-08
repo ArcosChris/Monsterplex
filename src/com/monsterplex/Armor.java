@@ -16,11 +16,11 @@ public class Armor implements Tool {
 
     @Override
     public void ability(Player player) {
-        if(player.hasArmor && player.armorHealth != FULL_ARMOR_HEALTH){
+        if(player.hasArmor() && player.armorHealth != FULL_ARMOR_HEALTH){
             player.armorHealth = FULL_ARMOR_HEALTH;
         }
         else{
-            player.hasArmor = true;
+            player.setHasArmor(true);
             player.armorHealth = FULL_ARMOR_HEALTH;
         }
     }
