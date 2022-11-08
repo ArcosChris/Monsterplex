@@ -1,5 +1,5 @@
 package com.monsterplex;
 
-interface Tool {
+interface Tool extends Inventory {
     void ability(Player player);
 }

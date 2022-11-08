@@ -1,6 +1,6 @@
 package com.monsterplex;
 
-public class Weapon {
+public class Weapon implements Inventory{
     public WeaponType weapon;
     public int damage;
 

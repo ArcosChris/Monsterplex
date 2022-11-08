@@ -24,6 +24,7 @@ public class MonsterplexApp {
         player = Player.create(name);
         playerMap = new UserMap(player);
         printDirections();
+        Console.clear();
         showMap();
 
     }
@@ -48,7 +49,7 @@ public class MonsterplexApp {
     }
 
     private void printDirections(){
-        String directions = String.format("Welcome, %s. The game rules are very simple... just don't die. You have 10 minutes to escape.", player.getName());
+        String directions = String.format("Welcome, %s. The game rules are very simple... just don't die. You have 10 minutes to escape.\n", player.getName());
         for (char c : directions.toCharArray()) {
             Console.pause(100);
             System.out.print(c);
