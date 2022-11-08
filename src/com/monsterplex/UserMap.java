@@ -63,11 +63,11 @@ public class UserMap {
             setInCoordinate(currentPosition[0], currentPosition[1], ' ');
             this.currentPosition = new int[]{x, y};
             setInCoordinate(x, y, PLAYER.symbol());
-            checkUserSurroundingsForMonster(x, y);
+            checkUserSurroundings(x, y);
         }
     }
 
-    private void checkUserSurroundingsForMonster(int x, int y) {
+    private void checkUserSurroundings(int x, int y) {
         List<int[]> surroundings = new ArrayList<>();
         surroundings.add(new int[]{x, y + 1});
         surroundings.add(new int[]{x, y - 1});
@@ -85,13 +85,17 @@ public class UserMap {
         }
     }
 
-
     private void setRoomPositions() {
         createRoomsBasedOnMap();
+        Room previousRoom= null;
         int startingX = 2;
         int roomCount = 0;
 
         for (Room room : rooms) {
+            if(previousRoom != null && previousRoom.isLocked()){
+                room.addNewFeature(KEY);
+            }
+
             int randomRoomLineY = Randomizer.randomPosition(Room.roomWidth - 2) + 1; //only on lines 1-4
             int randomRoomExitX = Math.random() > 0.5 ? 0 : Room.roomLength;
 
@@ -114,6 +118,7 @@ public class UserMap {
                 startingX = 2;
             }
             roomCount++;
+            previousRoom = room;
         }
     }
 
@@ -132,11 +137,9 @@ public class UserMap {
             if (i % 2 == 0) {
                 rooms.add(new Room(true));
             } else {
-                rooms.add(new Room());
+                rooms.add(new Room(false));
             }
         }
-
-
     }
 
     private void setMapLegendItems() {

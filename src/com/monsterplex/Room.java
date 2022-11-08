@@ -18,21 +18,17 @@ class Room {
     public static final int roomWidth = 6; //roomStructure.size();
 
     private final int roomNumber;
-    private boolean isLocked = false;
+    private boolean isLocked;
 
     public void addNewFeature(Feature newFeature){
         addFeaturesToRoom(newFeature);
     }
 
-    public Room() {
+    public Room(boolean isLocked) {
         this.roomNumber = nextId++;
+        setLocked(isLocked);
         initialize();
         addFeatures();
-    }
-
-    public Room(boolean isLocked) {
-        this();
-        setLocked(isLocked);
     }
 
     public List<String> imageLines() {
@@ -65,7 +61,9 @@ class Room {
 
     private void addFeatures() {
         for (Feature feature : roomFeatures()) {
-           if(hasFeature() || feature.equals(MONSTER) || feature.equals(PICTURE)) {
+            if(feature.equals(MONSTER) && !isLocked()){
+                addFeaturesToRoom(feature);
+            }else if (hasFeature()|| feature.equals(PICTURE)) {
                addFeaturesToRoom(feature);
            }
         }
