@@ -1,5 +1,7 @@
 package com.monsterplex;
 
+import java.util.Random;
+
 public class Monster extends Character{
     public MonsterType monsterType;
 
@@ -32,5 +34,48 @@ public class Monster extends Character{
     @Override
     public String toString(){
         return String.format("MonsterType: %s, Health: %s, TEST", getMonsterType(), getHealth());
+    }
+
+    static class Force {
+        private final static int MIN_FORCE = 1;
+        private final static int MAX_FORCE = 20;
+
+        //method to return random force value between the min and max force
+        public static int get() {
+            double random = Math.random();
+            return (int) (random * MAX_FORCE + MIN_FORCE);
+        }
+    }
+
+    enum Attack {
+        BITE("Bite"),
+        FIRE("Fire"),
+        PUNCH("Punch"),
+        CHAINSAW("Chainsaw"),
+        MACHETE("Machete"),
+        CROSSBOW("Crossbow"),
+        NUNCHUCKS("Nunchucks"),
+        SCYTHE("Scythe"),
+        THUNDER("Thunder");
+
+        private final String attackName;
+
+        Attack(String attackName) {
+            this.attackName = attackName;
+        }
+
+        public String getAttackName() {
+            return attackName;
+        }
+
+        public static Attack getRandomAttack() {
+            int random = new Random().nextInt(Attack.values().length);
+            return Attack.values()[random];
+        }
+
+        @Override
+        public String toString() {
+            return getAttackName();
+        }
     }
 }
