@@ -91,8 +91,8 @@ public class MonsterplexApp {
             System.out.printf("[%s] - %s\n", i, userInventory.get(i));
         }
 
-        String input = prompter.prompt("Select an item number for details or [E]xit: ", String.format("[xX0-%s]", userInventory.size()), "\nNot Valid\n ");
-        if ("X".equals(input.toUpperCase())) {
+        String input = prompter.prompt("Select an item number for details or [E]xit: ", String.format("[eE0-%s]", userInventory.size()), "\nNot Valid\n ");
+        if ("E".equals(input.toUpperCase())) {
             game();
         } else {
             inventoryDetails(input);
