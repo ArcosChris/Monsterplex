@@ -18,10 +18,7 @@ public class Player extends Character {
     private final List<Weapon> weapons = new ArrayList<>();
     private List<Tool> tools = new ArrayList<>();
     private List<Key> keys = new ArrayList<>();
-
-
     private final WeaponType currentWeapon = WeaponType.STICK;
-
     public boolean hasArmor = false;
     public double armorHealth = Armor.NO_ARMOR_HEALTH;
 
@@ -31,9 +28,9 @@ public class Player extends Character {
 
     //actions methods
     public void attack(Monster target) {
-
         target.setHealth(target.health - currentWeapon.getDamage());
-
+        MonsterType monsterAttacked = target.getMonsterType();
+        System.out.printf("You attacked %s : %s current health: %s", monsterAttacked, monsterAttacked, target.getHealth());
     }
 
     public void useTool(Tool tool) {
@@ -81,11 +78,25 @@ public class Player extends Character {
         this.keys = keys;
     }
 
+    public boolean hasArmor() {
+        return hasArmor;
+    }
+
+    public void setHasArmor(boolean hasArmor) {
+        this.hasArmor = hasArmor;
+    }
+
     public double getArmorHealth() {
         return armorHealth;
     }
 
     public void setArmorHealth(double armourHealth) {
-        this.armorHealth = armourHealth;
+        if(armourHealth == 0){
+            setHasArmor(false);
+            setArmorHealth(Armor.NO_ARMOR_HEALTH);
+        }
+        else {
+            this.armorHealth = armourHealth;
+        }
     }
 }

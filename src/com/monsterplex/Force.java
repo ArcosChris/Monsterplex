@@ -2,7 +2,7 @@ package com.monsterplex;
 
 class Force {
     private final static int MIN_FORCE = 1;
-    private final static int MAX_FORCE = 10;
+    private final static int MAX_FORCE = 20;
 
     //method to return random force value between the min and max force
     public static int get(){
