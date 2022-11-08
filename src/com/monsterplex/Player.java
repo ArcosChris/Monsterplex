@@ -17,7 +17,7 @@ public class Player extends Character {
     private boolean hasKey = false;
     public double armorHealth = Armor.NO_ARMOR_HEALTH;
 
-    private final Weapon currentWeapon = Weapon.STICK;
+    private Weapon currentWeapon = Weapon.STICK;
 
     private Player(String name){
         setName(name);
@@ -46,7 +46,6 @@ public class Player extends Character {
         tools.add(tool);
     }
 
-    //TODO:show all weapons and tools
     public List<Inventory> getUserInventory(){
 
         List<Inventory> inventory = new ArrayList<>();
@@ -92,5 +91,13 @@ public class Player extends Character {
         else {
             this.armorHealth = armourHealth;
         }
+    }
+
+    public Weapon getCurrentWeapon() {
+        return currentWeapon;
+    }
+
+    public void setCurrentWeapon(Weapon weapon){
+        this.currentWeapon = weapon;
     }
 }

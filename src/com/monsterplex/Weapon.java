@@ -35,4 +35,9 @@ public enum Weapon implements Inventory {
     public String toString(){
         return getDisplay();
     }
+
+    @Override
+    public String getDescription() {
+        return String.format("%s has %s damage", getDisplay(), getDamage());
+    }
 }

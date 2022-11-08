@@ -2,9 +2,7 @@ package com.monsterplex.app;
 
 import com.apps.util.Prompter;
 import com.apps.util.Console;
-import com.monsterplex.Inventory;
-import com.monsterplex.Player;
-import com.monsterplex.UserMap;
+import com.monsterplex.*;
 
 import java.io.*;
 import java.util.List;
@@ -28,7 +26,6 @@ public class MonsterplexApp {
         playerMap = UserMap.create();
         printDirections();
         Console.pause(200);
-        Console.clear();
         game();
     }
 
@@ -60,6 +57,7 @@ public class MonsterplexApp {
     }
 
     private void game() {
+        Console.clear();
         playerMap.show();
         while (!player.isDead) {
             String input = prompter.prompt("Please enter a direction to continue or enter I for inventory: ", "[NESWIneswi]{1}", "\nNot quite, try again.\n");
@@ -83,18 +81,43 @@ public class MonsterplexApp {
     }
 
     private void userSelectedInventory() {
-        System.out.println("inventory stuffs");
         Console.clear();
-//       /List<Inventory> userInventory = player.getUserInventory();
-//
-//        for (int i = 0; i < userInventory.size(); i++) {
-//            System.out.println("hello");
-//        }
-//        prompter.prompt("Select an item number for details", String.format("[%s]", userInventory.size()), "\nNot Valid\n ");
-//
+        List<Inventory> userInventory = player.getUserInventory();
 
-        // need to clear console and show user inventory
-        //give user option to change weapon or use tools
-        //if user types x go back to map (maybe just call startGame again)
+        for (int i = 0; i < userInventory.size(); i++) {
+            System.out.printf("[%s] - %s\n", i, userInventory.get(i));
+        }
+
+        String input = prompter.prompt("Select an item number for details or [E]xit: ", String.format("[xX0-%s]", userInventory.size()), "\nNot Valid\n ");
+        if ("X".equals(input.toUpperCase())) {
+            game();
+        } else {
+            inventoryDetails(input);
+        }
+    }
+
+    private void inventoryDetails(String input) {
+        Console.clear();
+        int item = Integer.parseInt(input);
+        Inventory itemSelected = player.getUserInventory().get(item);
+        String itemDescription = itemSelected.getDescription();
+        System.out.printf("\n%s - %s\n", itemSelected, itemDescription);
+
+        String selection = prompter.prompt("[U]se item \n[E]xit\nSelect option: ", "[ueUE]", "Please enter valid selection");
+        switch (selection.toUpperCase()) {
+            case "U":
+                if (itemSelected instanceof Weapon) {
+                    Weapon weapon = (Weapon) itemSelected;
+                    player.setCurrentWeapon(weapon);
+                } else if (itemSelected instanceof Tool) {
+                    Tool tool = (Tool) itemSelected;
+                    player.useTool(tool);
+                }
+                break;
+            case "E":
+                userSelectedInventory();
+                break;
+        }
+        userSelectedInventory();
     }
 }
