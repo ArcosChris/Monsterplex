@@ -20,7 +20,7 @@ class Room {
     private final int roomNumber;
     private boolean isLocked;
 
-    public void addNewFeature(Feature newFeature){
+    public void addNewFeature(Feature newFeature) {
         addFeaturesToRoom(newFeature);
     }
 
@@ -60,12 +60,19 @@ class Room {
     }
 
     private void addFeatures() {
+        boolean add = false;
         for (Feature feature : roomFeatures()) {
-            if(feature.equals(MONSTER) && !isLocked()){
+
+            if(feature.equals(MONSTER) && isLocked){
+                add = false;
+            }
+            else if(hasFeature() || feature.equals(PICTURE) || feature.equals(MONSTER)){
+                add = true;
+            }
+
+            if(add){
                 addFeaturesToRoom(feature);
-            }else if (hasFeature()|| feature.equals(PICTURE)) {
-               addFeaturesToRoom(feature);
-           }
+            }
         }
     }
 
@@ -73,7 +80,7 @@ class Room {
         return Math.random() < 0.5;
     }
 
-    private void addFeaturesToRoom(Feature feature){
+    private void addFeaturesToRoom(Feature feature) {
         int[] coordinates = getFeatureCoordinates();
         StringBuilder line = roomStructure.get(coordinates[0]);  // line 1-4
         line.setCharAt(coordinates[1], feature.symbol());     // character 1-10

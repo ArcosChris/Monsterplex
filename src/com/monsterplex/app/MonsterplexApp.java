@@ -2,10 +2,13 @@ package com.monsterplex.app;
 
 import com.apps.util.Prompter;
 import com.apps.util.Console;
+import com.monsterplex.Inventory;
 import com.monsterplex.Player;
 import com.monsterplex.UserMap;
 
 import java.io.*;
+import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 
@@ -16,17 +19,17 @@ import java.util.Scanner;
 public class MonsterplexApp {
     Prompter prompter = new Prompter(new Scanner(System.in));
     Player player = null;
-    UserMap playerMap= null;
+    UserMap playerMap = null;
 
     public void execute() {
         welcome();
         String name = promptUserForName();
         player = Player.create(name);
-        playerMap = new UserMap(player);
+        playerMap = UserMap.create();
         printDirections();
+        Console.pause(200);
         Console.clear();
-        showMap();
-
+        game();
     }
 
     private void welcome() {
@@ -44,11 +47,11 @@ public class MonsterplexApp {
         }
     }
 
-    private String promptUserForName(){
-       return prompter.prompt("PLEASE ENTER YOUR NAME TO BEGIN: ", "[a-zA-Z]+", "\nName should only have letters.\n");
+    private String promptUserForName() {
+        return prompter.prompt("PLEASE ENTER YOUR NAME TO BEGIN: ", "[a-zA-Z]+", "\nName should only have letters.\n");
     }
 
-    private void printDirections(){
+    private void printDirections() {
         String directions = String.format("Welcome, %s. The game rules are very simple... just don't die. You have 10 minutes to escape.\n", player.getName());
         for (char c : directions.toCharArray()) {
             Console.pause(100);
@@ -56,8 +59,42 @@ public class MonsterplexApp {
         }
     }
 
-    private void showMap(){
+    private void game() {
+        playerMap.show();
+        while (!player.isDead) {
+            String input = prompter.prompt("Please enter a direction to continue or enter I for inventory: ", "[NESWIneswi]{1}", "\nNot quite, try again.\n");
+            switch (input.toUpperCase()) {
+                case "N":
+                case "E":
+                case "S":
+                case "W":
+                    userSwitchPosition(input);
+                    break;
+                case "I":
+                    userSelectedInventory();
+                    break;
+            }
+        }
+    }
+
+    private void userSwitchPosition(String direction) {
+        playerMap.setUserPosition(direction);
         playerMap.show();
     }
 
+    private void userSelectedInventory() {
+        System.out.println("inventory stuffs");
+        Console.clear();
+//       /List<Inventory> userInventory = player.getUserInventory();
+//
+//        for (int i = 0; i < userInventory.size(); i++) {
+//            System.out.println("hello");
+//        }
+//        prompter.prompt("Select an item number for details", String.format("[%s]", userInventory.size()), "\nNot Valid\n ");
+//
+
+        // need to clear console and show user inventory
+        //give user option to change weapon or use tools
+        //if user types x go back to map (maybe just call startGame again)
+    }
 }

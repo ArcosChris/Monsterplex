@@ -15,7 +15,7 @@ class RoomMapTest {
 //        System.out.println(test1.getRiddle());
 
         Player player = Player.create("Chris");
-        UserMap map = new UserMap(player);
+        UserMap map = UserMap.create();
 
         map.show();
 
