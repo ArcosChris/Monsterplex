@@ -46,7 +46,7 @@ public class Player extends Character {
         tools.add(tool);
     }
 
-    //show all weapons and tools
+    //TODO:show all weapons and tools
     public void getUserInventory(){
 
     }

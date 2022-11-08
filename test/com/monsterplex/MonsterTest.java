@@ -7,11 +7,6 @@ import static org.junit.Assert.*;
 
 public class MonsterTest {
 
-    @Before
-    public void setUp() {
-
-    }
-
     @Test
     public void attack_shouldReducePlayerHealth_whenNoArmor(){
         Monster monster = new Monster(MonsterType.CYCLOPS);
