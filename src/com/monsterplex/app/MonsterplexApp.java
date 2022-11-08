@@ -81,8 +81,11 @@ public class MonsterplexApp {
     }
 
     private void userSelectedInventory() {
+        Console.pause(3000L);
         Console.clear();
         List<Inventory> userInventory = player.getUserInventory();
+
+        System.out.printf("\n%s's Inventory: \n", player.getName());
 
         for (int i = 0; i < userInventory.size(); i++) {
             System.out.printf("[%s] - %s\n", i, userInventory.get(i));
@@ -101,7 +104,8 @@ public class MonsterplexApp {
         int item = Integer.parseInt(input);
         Inventory itemSelected = player.getUserInventory().get(item);
         String itemDescription = itemSelected.getDescription();
-        System.out.printf("\n%s - %s\n", itemSelected, itemDescription);
+        System.out.printf("\n%s Details: \n",itemSelected);
+        System.out.printf("%s\n", itemDescription);
 
         String selection = prompter.prompt("[U]se item \n[E]xit\nSelect option: ", "[ueUE]", "Please enter valid selection");
         switch (selection.toUpperCase()) {
