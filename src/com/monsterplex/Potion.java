@@ -1,10 +1,9 @@
 package com.monsterplex;
 
 class Potion implements Tool {
-    public String description;
 
-    public Potion(String description) {
-        setDescription(description);
+    public Potion() {
+
     }
 
     @Override
@@ -15,13 +14,5 @@ class Potion implements Tool {
         if(health < Player.MAX_HEALTH){
             player.health = Player.MAX_HEALTH;
         }
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 }

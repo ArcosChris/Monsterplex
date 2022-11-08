@@ -1,6 +1,5 @@
 package com.monsterplex;
 
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,16 +12,17 @@ public class Player extends Character {
     private String name;
     //User inventory
     private final List<Weapon> weapons = new ArrayList<>();
-
     private List<Tool> tools = new ArrayList<>();
     private boolean hasArmor = false;
     private boolean hasKey = false;
     public double armorHealth = Armor.NO_ARMOR_HEALTH;
 
-    private final WeaponType currentWeapon = WeaponType.STICK;
+    private final Weapon currentWeapon = Weapon.STICK;
 
     private Player(String name){
         setName(name);
+        addWeapon(Weapon.STICK);
+        addTool(new Potion());
     }
 
     //actions methods
@@ -47,8 +47,12 @@ public class Player extends Character {
     }
 
     //TODO:show all weapons and tools
-    public void getUserInventory(){
+    public List<Inventory> getUserInventory(){
 
+        List<Inventory> inventory = new ArrayList<>();
+        inventory.addAll(weapons);
+        inventory.addAll(tools);
+        return inventory;
     }
 
     //accessors
