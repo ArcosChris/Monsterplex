@@ -3,32 +3,24 @@ package com.monsterplex;
 import java.util.Random;
 
 public enum Attack {
-    BITE("Bite", 5.0),
-    FIRE("Fire", 10.0),
-    PUNCH("Punch", 7.0),
-    CHAINSAW("Chainsaw", 20.0),
-    MACHETE("Machete", 15.0),
-    CROSSBOW("Crossbow", 30.0),
-    NUNCHUCKS("Nunchucks", 25.0),
-    SCYTHE("Scythe", 5.0),
-    THUNDER("Thunder", 35.0);
+    BITE("Bite"),
+    FIRE("Fire"),
+    PUNCH("Punch"),
+    CHAINSAW("Chainsaw"),
+    MACHETE("Machete"),
+    CROSSBOW("Crossbow"),
+    NUNCHUCKS("Nunchucks"),
+    SCYTHE("Scythe"),
+    THUNDER("Thunder");
 
     private final String attackName;
 
-
-    private final double damage;
-
-    Attack(String attackName, double damage) {
+    Attack(String attackName) {
         this.attackName = attackName;
-        this.damage = damage;
     }
 
     public String getAttackName() {
         return attackName;
-    }
-
-    public double getDamage() {
-        return damage;
     }
 
     public static Attack getRandomAttack() {
