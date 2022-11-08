@@ -13,13 +13,22 @@ public class Armor implements Tool {
 
     @Override
     public void ability(Player player) {
-        if(player.hasArmor() && player.getArmorHealth() != FULL_ARMOR_HEALTH){
+        if (player.hasArmor() && player.getArmorHealth() != FULL_ARMOR_HEALTH) {
             player.setArmorHealth(FULL_ARMOR_HEALTH);
-        }
-        else{
+        } else {
             player.setHasArmor(true);
             player.setArmorHealth(FULL_ARMOR_HEALTH);
         }
+    }
+
+    @Override
+    public String getDescription() {
+        return "Armor will protect you against attacks. so your health will not be affected";
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName();
     }
 }
 
