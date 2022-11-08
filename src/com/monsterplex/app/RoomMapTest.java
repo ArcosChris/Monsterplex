@@ -1,8 +1,6 @@
 package com.monsterplex.app;
 
-import com.monsterplex.InMemoryRiddleHolder;
 import com.monsterplex.Player;
-import com.monsterplex.Riddle;
 import com.monsterplex.UserMap;
 
 import java.util.Scanner;

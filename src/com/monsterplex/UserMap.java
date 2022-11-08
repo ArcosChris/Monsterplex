@@ -56,7 +56,7 @@ public class UserMap {
                 break;
         }
 
-        if (x <= 0 || x > mapLength - 1 || y <= 0 || y > mapWidth - 1 || !validPosition(x, y)) {
+        if (!validPosition(x, y)) {
             System.out.println("Hmm.. there seems to be a wall there. Let's try a different route.");
         } else {
             //clear previous position

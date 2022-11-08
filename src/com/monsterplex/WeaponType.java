@@ -27,7 +27,7 @@ public enum WeaponType {
     }
 
     public static WeaponType getRandomWeaponType() {
-        int random = new Random().nextInt(Attack.values().length);
+        int random = new Random().nextInt(WeaponType.values().length);
         return WeaponType.values()[random];
     }
 

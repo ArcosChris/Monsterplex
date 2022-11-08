@@ -21,7 +21,7 @@ public enum MonsterType {
     }
 
     public static MonsterType getRandomMonster() {
-        int random = new Random().nextInt(Attack.values().length);
+        int random = new Random().nextInt(MonsterType.values().length);
         return MonsterType.values()[random];
     }
 
