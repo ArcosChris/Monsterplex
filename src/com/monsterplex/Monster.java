@@ -11,16 +11,10 @@ public class Monster extends Character{
     public void attack(Player target){
 
         if(target.hasArmor){
-            target.setArmorHealth(target.armorHealth - 1);
-        }
-
-        // should only be called when Monster is attacked by player
-        if(target.health <= MIN_HEALTH){
-            target.isDead = true;
-            System.out.println("Player is dead");
+            target.setArmorHealth(target.armorHealth - Armor.armorDamage);
         }
         else {
-            target.setHealth(target.getHealth() - Attack.BITE.getDamage());
+            target.setHealth(target.getHealth() - Attack.BITE.getDamage()); // make it random
         }
     }
 

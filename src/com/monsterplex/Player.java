@@ -32,13 +32,8 @@ public class Player extends Character {
     //actions methods
     public void attack(Monster target) {
 
-        if (target.getHealth() <= MIN_HEALTH) {
-            target.isDead = true;
-            System.out.println("Monster is dead");
+        target.setHealth(target.health - currentWeapon.getDamage());
 
-        } else {
-            target.setHealth(target.health  - currentWeapon.getDamage());
-        }
     }
 
     public void useTool(Tool tool) {
