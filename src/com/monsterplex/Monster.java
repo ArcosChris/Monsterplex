@@ -15,20 +15,17 @@ public class Monster extends Character{
 
         if(target.hasArmor()){
             target.setArmorHealth(target.getArmorHealth() - Armor.armorDamage);
-            System.out.printf("%s uses attack %s. Your armor health is now: %s", getMonsterType(), randomAttack, target.getArmorHealth());
+            System.out.printf("\n%s uses attack %s. Your armor health is now: %s\n" +
+                    "your health is still %s", getMonsterType(), randomAttack, target.getArmorHealth(), target.getHealth());
         }
         else {
-            target.setHealth(target.getHealth() - force); // make it random
-            System.out.printf("%s uses attack %s. Your health is now: %s", getMonsterType(), randomAttack, target.getHealth());
+            target.setHealth(target.getHealth() - force);
+            System.out.printf("\n%s uses attack %s. Your health is now: %s", getMonsterType(), randomAttack, target.getHealth());
         }
     }
 
     public MonsterType getMonsterType() {
         return monsterType;
-    }
-
-    public void setMonsterType(MonsterType monsterType) {
-        this.monsterType = monsterType;
     }
 
     @Override

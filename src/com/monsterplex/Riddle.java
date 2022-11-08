@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-  class Riddle {
+class Riddle {
     private long id;
     private String riddle;
     private String answer;
