@@ -1,5 +1,7 @@
 package com.monsterplex.app;
 
+import com.apps.util.Prompter;
+
 import java.io.*;
 import java.util.Scanner;
 import java.util.Scanner;
@@ -9,7 +11,8 @@ import java.util.Scanner;
  * sending provided inputs to system classes
  */
 public class MonsterplexApp {
-    private final Scanner scanner = new Scanner(System.in);
+//    private final Scanner scanner = new Scanner(System.in);
+    Prompter prompter = new Prompter(new Scanner(System.in));
 
     public void execute() {
         welcome();
@@ -17,7 +20,7 @@ public class MonsterplexApp {
 
     private void welcome() {
         try {
-            File file = new File("MonsterplexArt.txt");
+            File file = new File("images/MonsterplexArt.txt");
             Scanner myReader = new Scanner(file);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
