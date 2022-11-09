@@ -29,7 +29,6 @@ public class Player extends Character {
         target.setHealth(target.getHealth() - currentWeapon.getDamage());
         MonsterType monsterAttacked = target.getMonsterType();
         System.out.printf("You attacked %s : %s current health: %s", monsterAttacked, monsterAttacked, target.getHealth());
-        target.attack(this);
     }
 
     public void useTool(Tool tool) {
