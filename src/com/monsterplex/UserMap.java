@@ -12,6 +12,7 @@ public class UserMap {
     private final List<StringBuilder> legend = Reader.readFileToArrayList("images/mapLegend.txt");
     private final List<Room> rooms = new ArrayList<>();
     private final int mapLength = mapStructure.get(0).length();
+    private final int mapWidth = mapStructure.size();
     private final List<Integer> exitCode = new ArrayList<>();
     private final List<Integer> codeShownToUser = new ArrayList<>();
     private int[] currentPosition = new int[]{1, mapStructure.size() - 2};
@@ -70,7 +71,6 @@ public class UserMap {
         setInCoordinate(currentPosition[0], currentPosition[1], ' ');
         this.currentPosition = new int[]{x, y};
         setInCoordinate(x, y, PLAYER.symbol());
-
     }
 
     public List<Integer> getExitCode(){
@@ -84,61 +84,18 @@ public class UserMap {
         return digitFromCode;
     }
 
+    public int getMapLength(){
+        return mapLength;
+    }
 
-//    public void setUserPosition(String userInput) {
-//        int x = currentPosition[0];
-//        int y = currentPosition[1];
-//
-//        switch (userInput.toUpperCase()) {
-//            case "N":
-//                y -= 1;
-//                break;
-//
-//            case "E":
-//                x += 1;
-//                break;
-//
-//            case "S":
-//                y += 1;
-//                break;
-//
-//            case "W":
-//                x -= 1;
-//                break;
-//        }
-//
-//        if (!validPosition(x, y)) {
-//            System.out.println("Hmm.. there seems to be a wall there. Let's try a different route.");
-//        } else {
-//            setInCoordinate(currentPosition[0], currentPosition[1], ' ');
-//            this.currentPosition = new int[]{x, y};
-//            setInCoordinate(x, y, PLAYER.symbol());
-//           // checkUserSurroundings(x, y);
-//        }
+    public int getMapWidth(){
+        return mapWidth;
+    }
 
-//    }
-//    private void checkUserSurroundings(int x, int y) {
-//        List<int[]> surroundings = new ArrayList<>();
-//        surroundings.add(new int[]{x, y + 1});
-//        surroundings.add(new int[]{x, y - 1});
-//        surroundings.add(new int[]{x - 1, y});
-//        surroundings.add(new int[]{x + 1, y});
-//
-//        for (int[] item : surroundings) {
-//            int col = item[0];
-//            int row = item[1];
-//
-//            char itemInPosition = characterAtPosition(col, row);
-//
-//            for(Feature feature : Feature.values()){
-//                if(itemInPosition == feature.symbol()){
-//                 //return itemInPosition;
-//                }
-//            }
+    public int[] getPlayerPosition(){
+        return currentPosition;
+    }
 
-//        }
-
-//    }
     private void generateRandomExitCode() {
     for (int i =0; i < 4; i++){
         int randomNumber = new Random().nextInt(9);

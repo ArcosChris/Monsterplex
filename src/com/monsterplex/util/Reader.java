@@ -4,13 +4,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Reader {
 
     private Reader(){}
 
-    public static ArrayList<StringBuilder> readFileToArrayList(String fileName){
-        ArrayList<StringBuilder> lines = new ArrayList<>();
+    public static List<StringBuilder> readFileToArrayList(String fileName){
+        List<StringBuilder> lines = new ArrayList<>();
 
         try {
             Files.lines(Path.of(fileName))

@@ -6,6 +6,12 @@ import com.monsterplex.*;
 
 import java.io.*;
 import java.lang.Character;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.Duration;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
 import java.util.*;
 
 
@@ -14,13 +20,14 @@ import java.util.*;
  * sending provided inputs to system classes
  */
 public class MonsterplexApp {
-    Scanner scanner = new Scanner(System.in);
-    Prompter prompter = new Prompter(scanner);
-    int attemptsToExit = 3;
-    Player player = null;
-    UserMap playerMap = null;
-    boolean gameIsOver = false;
-    boolean userWon = false;
+    private final Prompter prompter = new Prompter(new Scanner(System.in));
+    private int attemptsToExit = 3;
+    private Player player = null;
+    private UserMap playerMap = null;
+    private boolean gameIsOver = false;
+    private boolean userWon = false;
+    private LocalTime endTime;
+    private int timeToComplete = 10;
 
 
     public void execute() {
@@ -29,7 +36,7 @@ public class MonsterplexApp {
         player = Player.create(name);
         playerMap = UserMap.create();
         printDirections();
-        Console.pause(200);
+        Console.pause(500);
         game();
     }
 
@@ -43,7 +50,7 @@ public class MonsterplexApp {
     }
 
     private void printDirections() {
-        String directions = String.format("Welcome, %s. The game rules are very simple... just don't die. You have 10 minutes to escape.\n", player.getName());
+        String directions = String.format("\nWelcome, %s. The game rules are very simple... just don't die. You have %s minutes to escape.\n", player.getName(), timeToComplete);
         for (char c : directions.toCharArray()) {
             Console.pause(100);
             System.out.print(c);
@@ -52,12 +59,16 @@ public class MonsterplexApp {
 
     private void game() {
         Console.clear();
+        endTime = LocalTime.now().plusMinutes(timeToComplete);
+
+        System.out.println("Your timer has started... Good luck! ");
 
         if (!gameIsOver) {
             playerMap.show();
         }
 
-        while (!player.isDead() && !gameIsOver) {
+        while (!player.isDead() && !gameIsOver && !isTimeRemaining()) {
+            System.out.printf("Time remaining: %s", timeRemaining());
             System.out.println("\n\nPlease enter a direction [N]orth, [E]ast, [S]outh, [W]est or [I]nventory:");
             String input = prompter.prompt("Enter command: ", "[NESWIneswi]{1}", "\nNot quite, try again.\n");
             switch (input.toUpperCase()) {
@@ -65,20 +76,31 @@ public class MonsterplexApp {
                 case "E":
                 case "S":
                 case "W":
+                    Console.pause(500);
+                    Console.clear();
                     userSwitchPosition(input);
                     break;
                 case "I":
-                    userSelectedInventory();
+                    printUserInventory();
+                    Console.clear();
+                    playerMap.show();
                     break;
             }
         }
 
+        Console.clear();
+        Console.pause(500);
         if (userWon) {
             //win message
             System.out.println("YOU WON!!!!!!!");
-        } else {
+        }
+        else if(isTimeRemaining()) {
             //game over message
-            System.out.println("THAT SUCKS!");
+            System.out.println("Time is up.");
+        }
+        else if(player.isDead()){
+            System.out.println("DEAD");
+
         }
     }
 
@@ -95,13 +117,74 @@ public class MonsterplexApp {
 
             if (userCompleted) {
                 playerMap.setCurrentPosition(x, y);
-                //checkForMonsters(x,y);
             }
         } else {
             playerMap.setCurrentPosition(x, y);
         }
-        Console.clear();
+        int[] playerPosition = playerMap.getPlayerPosition();
+        checkForMonsters(playerPosition[0], playerPosition[1]);
+
         playerMap.show();
+    }
+
+    private void checkForMonsters(int x, int y) {
+        List<int[]> surroundings = new ArrayList<>();
+        surroundings.add(new int[]{x, y + 1});
+        surroundings.add(new int[]{x, y - 1});
+        surroundings.add(new int[]{x - 1, y});
+        surroundings.add(new int[]{x + 1, y});
+        surroundings.add(new int[]{x - 1, y - 1});
+        surroundings.add(new int[]{x + 1, y - 1});
+        surroundings.add(new int[]{x - 1, y + 1});
+        surroundings.add(new int[]{x + 1, y + 1});
+
+        for (int[] item : surroundings) {
+            int col = item[0];
+            int row = item[1];
+
+            if (col <= 0 || col > playerMap.getMapLength() || row <= 0 || row > playerMap.getMapWidth()) {
+                continue;
+            }
+
+            if (playerMap.getCharacterAtPosition(col, row) == 'M') {
+                boolean playerWon = monsterFight();
+                if (playerWon) {
+                    playerMap.setCurrentPosition(col, row);
+                } else {
+                    gameIsOver = true;
+                    userWon = false;
+                }
+            }
+        }
+    }
+
+    private boolean monsterFight() {
+        boolean playerWon = false;
+        Monster monster = Monster.createRandom();
+
+        //do monster presentation stuff here
+        while (!monster.isDead() && !player.isDead()) {
+            monster.attack(player);
+
+            String userInput = prompter.prompt("\n[A]ttack \n[C]hange Weapon\n\nSelect option: ", "[aAcC]", "\nNot valid comand.\n");
+            switch (userInput.toUpperCase()) {
+                case "A":
+                    player.attack(monster);
+                    break;
+                case "C":
+                    printUserInventory();
+                    break;
+            }
+        }
+        if (monster.isDead()) {
+            playerWon = true;
+            //print congrat message
+        } else {
+            System.out.println("You are dead");
+        }
+
+
+        return false;
     }
 
     //feature methods
@@ -160,7 +243,7 @@ public class MonsterplexApp {
         boolean completed = false;
         Riddle randomRiddle = Riddle.InMemoryRiddleHolder.getRandomRiddle();
 
-        System.out.println("Answer the following riddle to enter room.");
+        System.out.println("Answer the following riddle to enter room.\n");
         System.out.println(randomRiddle.getRiddle());
         String userAnswer = prompter.prompt("Answer: ", "[a-zA-z]+", "\nAnswer should be all letters\n");
 
@@ -170,35 +253,32 @@ public class MonsterplexApp {
         return completed;
     }
 
-    private void userSelectedInventory() {
+    private void printUserInventory() {
+        Console.pause(1000L);
         Console.clear();
         List<Inventory> userInventory = player.getUserInventory();
 
         System.out.printf("%s's Inventory: \n", player.getName());
-        System.out.printf("CurrentWeapon: %s \n\n", player.getCurrentWeapon());
+        System.out.printf("Current Weapon: %s \n\n", player.getCurrentWeapon());
 
 
         for (int i = 0; i < userInventory.size(); i++) {
             System.out.printf("[%s] - %s\n", i, userInventory.get(i));
         }
-
-        String input = prompter.prompt("\nSelect an item number for details or [E]xit: ", String.format("[eE0-%s]", userInventory.size()), "\nNot Valid\n ");
-        if ("E".equals(input.toUpperCase())) {
-            game();
-        } else {
-            inventoryDetails(input);
-        }
+        inventoryDetailPrompt();
     }
 
-    private void inventoryDetails(String input) {
-        Console.clear();
+    private void inventoryDetailPrompt() {
+        String input = prompter.prompt("\nSelect an item number for details: ", String.format("[0-%s]", player.getUserInventory().size()), "\nNot Valid\n ");
+
         int item = Integer.parseInt(input);
         Inventory itemSelected = player.getUserInventory().get(item);
         String itemDescription = itemSelected.getDescription();
+        Console.clear();
         System.out.printf("%s Details: \n", itemSelected);
         System.out.printf("%s\n", itemDescription);
 
-        String selection = prompter.prompt("\n[U]se item \n[E]xit\n\nSelect option: ", "[ueUE]", "\nPlease enter valid selection\n");
+        String selection = prompter.prompt("\n[U]se item\n[E]xit\n\nSelect option: ", "[ueUE]", "\nPlease enter valid selection\n");
         switch (selection.toUpperCase()) {
             case "U":
                 if (itemSelected instanceof Weapon) {
@@ -211,10 +291,8 @@ public class MonsterplexApp {
                 Console.pause(1500);
                 break;
             case "E":
-                userSelectedInventory();
                 break;
         }
-        userSelectedInventory();
     }
 
     private boolean keyMessage() {
@@ -296,14 +374,8 @@ public class MonsterplexApp {
 
     private void printFile(String fileName) {
         try {
-            File file = new File(fileName);
-            Scanner myReader = new Scanner(file);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                System.out.println(data);
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
+            System.out.println(Files.readString(Path.of(fileName)));
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -355,5 +427,15 @@ public class MonsterplexApp {
 
 
         return isCorrectCode;
+    }
+
+    private boolean isTimeRemaining() {
+        return LocalTime.now().withNano(0).isAfter(endTime);
+    }
+
+    private String timeRemaining() {
+        long seconds = Math.abs(ChronoUnit.SECONDS.between(LocalTime.now().withNano(0), endTime));
+
+        return String.format("%02d minutes and %02d seconds", (seconds/60) % 60, seconds % 60);
     }
 }
