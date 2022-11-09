@@ -16,7 +16,6 @@ public class Player extends Character {
     private boolean hasArmor = false;
     private boolean hasKey = false;
     public double armorHealth = Armor.NO_ARMOR_HEALTH;
-
     private Weapon currentWeapon = Weapon.STICK;
 
     private Player(String name){
