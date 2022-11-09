@@ -60,7 +60,8 @@ public class MonsterplexApp {
         Console.clear();
         playerMap.show();
         while (!player.isDead) {
-            String input = prompter.prompt("Please enter a direction to continue or enter I for inventory: ", "[NESWIneswi]{1}", "\nNot quite, try again.\n");
+            System.out.println("\n\nPlease enter a direction [N]orth, [E]ast, [S]outh, [W]est or [I]nventory:");
+            String input = prompter.prompt("Enter command: ", "[NESWIneswi]{1}", "\nNot quite, try again.\n");
             switch (input.toUpperCase()) {
                 case "N":
                 case "E":
@@ -76,22 +77,23 @@ public class MonsterplexApp {
     }
 
     private void userSwitchPosition(String direction) {
+        Console.clear();
         playerMap.setUserPosition(direction);
         playerMap.show();
     }
 
     private void userSelectedInventory() {
-        Console.pause(3000L);
+        Console.pause(1500L);
         Console.clear();
         List<Inventory> userInventory = player.getUserInventory();
 
-        System.out.printf("\n%s's Inventory: \n", player.getName());
+        System.out.printf("%s's Inventory: \n\n", player.getName());
 
         for (int i = 0; i < userInventory.size(); i++) {
             System.out.printf("[%s] - %s\n", i, userInventory.get(i));
         }
 
-        String input = prompter.prompt("Select an item number for details or [E]xit: ", String.format("[eE0-%s]", userInventory.size()), "\nNot Valid\n ");
+        String input = prompter.prompt("\nSelect an item number for details or [E]xit: ", String.format("[eE0-%s]", userInventory.size()), "\nNot Valid\n ");
         if ("E".equals(input.toUpperCase())) {
             game();
         } else {
@@ -104,10 +106,10 @@ public class MonsterplexApp {
         int item = Integer.parseInt(input);
         Inventory itemSelected = player.getUserInventory().get(item);
         String itemDescription = itemSelected.getDescription();
-        System.out.printf("\n%s Details: \n",itemSelected);
-        System.out.printf("%s\n", itemDescription);
+        System.out.printf("%s Details: \n\n",itemSelected);
+        System.out.printf("%s\n\n", itemDescription);
 
-        String selection = prompter.prompt("[U]se item \n[E]xit\nSelect option: ", "[ueUE]", "Please enter valid selection");
+        String selection = prompter.prompt("\n[U]se item \n[E]xit\n\nSelect option: ", "[ueUE]", "Please enter valid selection");
         switch (selection.toUpperCase()) {
             case "U":
                 if (itemSelected instanceof Weapon) {
@@ -117,6 +119,7 @@ public class MonsterplexApp {
                     Tool tool = (Tool) itemSelected;
                     player.useTool(tool);
                 }
+                Console.pause(1500);
                 break;
             case "E":
                 userSelectedInventory();

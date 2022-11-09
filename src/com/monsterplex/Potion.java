@@ -13,7 +13,7 @@ class Potion implements Tool {
             player.health = Player.MAX_HEALTH;
             player.removeTool(this);
         }else if(health == Player.MAX_HEALTH){
-            System.out.printf("You cannot use %s. Your Health is already at %s\n", getClass().getSimpleName(), player.getHealth());
+            System.out.printf("You cannot use %s. Your Health is already at %s\n. Don't be greedy..", getClass().getSimpleName(), player.getHealth());
         }
     }
 

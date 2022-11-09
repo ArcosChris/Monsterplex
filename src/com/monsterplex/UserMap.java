@@ -92,7 +92,7 @@ public class UserMap {
 
             for(Feature feature : Feature.values()){
                 if(itemInPosition == feature.symbol()){
-//                    return itemInPosition;
+                 //return itemInPosition;
                 }
             }
         }
