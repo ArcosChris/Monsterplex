@@ -9,7 +9,7 @@ public class MonsterTest {
 
     @Test
     public void attack_shouldReducePlayerHealth_whenNoArmor(){
-        Monster monster = new Monster(MonsterType.CYCLOPS);
+        Monster monster = Monster.createRandom();
         Player player = Player.create("John");
         monster.attack(player);
         assertTrue(player.getHealth() < Character.MAX_HEALTH);
@@ -17,7 +17,7 @@ public class MonsterTest {
 
     @Test
     public void attack_shouldNotReducePlayerHealth_whenPlayerHasArmor(){
-        Monster monster = new Monster(MonsterType.CYCLOPS);
+        Monster monster = Monster.createRandom();
         Player player = Player.create("John");
         Armor armor = Armor.create();
         player.useTool(armor);

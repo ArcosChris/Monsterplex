@@ -5,8 +5,13 @@ import java.util.Random;
 public class Monster extends Character{
     public MonsterType monsterType;
 
-    public Monster(MonsterType monster) {
+    private Monster(MonsterType monster) {
       this.monsterType = monster;
+    }
+
+    public static Monster createRandom(){
+        MonsterType randomType = MonsterType.getRandomMonster();
+        return new Monster(randomType);
     }
 
     public void attack(Player target){
