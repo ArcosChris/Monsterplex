@@ -28,7 +28,7 @@ public class PlayerTest {
     @Test
     public void removeTool_shouldRemoveToolToList() {
         Player player = Player.create("John");
-        Potion potion = new Potion();
+        Potion potion = Potion.create();
         player.removeTool(potion);
         int sizeOfInventory = player.getUserInventory().size();
         assertEquals(2, sizeOfInventory);

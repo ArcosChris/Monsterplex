@@ -74,7 +74,6 @@ public class MonsterplexApp {
             }
         }
 
-
         if (userWon) {
             //win message
             System.out.println("YOU WON!!!!!!!");
@@ -102,7 +101,7 @@ public class MonsterplexApp {
         } else {
             playerMap.setCurrentPosition(x, y);
         }
-
+        Console.clear();
         playerMap.show();
     }
 
@@ -316,6 +315,7 @@ public class MonsterplexApp {
             System.out.println("You have had enough tries! Goodbye forever.");
             player.setHealth(0);
         } else {
+            System.out.printf("\n You have %s attempts left.", attemptsToExit);
             System.out.println("Please enter 4 digit code to exit. Order does not matter.");
             String userAttempt = prompter.prompt("Code: ", "\\d{1,4}", "\nNot valid input code MUST be 4 digits\n");
 
@@ -327,10 +327,11 @@ public class MonsterplexApp {
                 userWon = true;
                 System.out.println("I think you got it!");
             } else {
-                System.out.printf("\nYou have %s attempts left\n", attemptsToExit);
                 attemptsToExit--;
+                System.out.printf("\nYou have %s attempts left\n", attemptsToExit);
             }
         }
+
 
         return completed;
     }

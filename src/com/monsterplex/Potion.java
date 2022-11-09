@@ -5,6 +5,7 @@ public class Potion implements Tool {
     private Potion() {
 
     }
+
     public static Potion create(){
         return new Potion();
     }
