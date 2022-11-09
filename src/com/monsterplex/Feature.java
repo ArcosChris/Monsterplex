@@ -1,6 +1,7 @@
 package com.monsterplex;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -32,6 +33,10 @@ public enum Feature {
 
     public static List<Feature> roomFeatures(){
         return new ArrayList<>(List.of(WEAPON, TOOL, MONSTER, PICTURE));
+    }
+
+    public static Feature getFeatureBySymbol(char symbol){
+        return Arrays.stream(Feature.values()).filter(x -> x.symbol() == symbol).findAny().orElse(null);
     }
 
     public char symbol() {

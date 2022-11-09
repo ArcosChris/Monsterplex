@@ -34,7 +34,7 @@ class RoomMapTest {
                     case "E":
                     case "S":
                     case "W":
-                        map.setUserPosition(input);
+                      //  map.setUserPosition(input);
                         break;
                     case "I":
                         System.out.println("No inventory");

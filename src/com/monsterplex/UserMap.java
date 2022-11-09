@@ -12,9 +12,8 @@ public class UserMap {
     private final List<StringBuilder> legend = Reader.readFileToArrayList("images/mapLegend.txt");
     private final List<Room> rooms = new ArrayList<>();
     private final int mapLength = mapStructure.get(0).length();
-    private final int[] exitCode = new int[4];
+    private final List<Integer> exitCode = new ArrayList<>();
     private final List<Integer> codeShownToUser = new ArrayList<>();
-
     private int[] currentPosition = new int[]{1, mapStructure.size() - 2};
 
     public static UserMap create(){
@@ -25,13 +24,6 @@ public class UserMap {
         generateRandomExitCode();
         setMapLegendItems();
         setRoomPositions();
-    }
-
-    private void generateRandomExitCode() {
-        for (int i =0; i < exitCode.length; i++){
-          int randomNumber = new Random().nextInt(9);
-          exitCode[i] = randomNumber;
-        }
     }
 
     public void show() {
@@ -45,11 +37,11 @@ public class UserMap {
         }
     }
 
-    public void setUserPosition(String userInput) {
+    public int[] getNextCoordinates(String direction) {
         int x = currentPosition[0];
         int y = currentPosition[1];
 
-        switch (userInput.toUpperCase()) {
+        switch (direction.toUpperCase()) {
             case "N":
                 y -= 1;
                 break;
@@ -66,37 +58,94 @@ public class UserMap {
                 x -= 1;
                 break;
         }
-
-        if (!validPosition(x, y)) {
-            System.out.println("Hmm.. there seems to be a wall there. Let's try a different route.");
-        } else {
-            setInCoordinate(currentPosition[0], currentPosition[1], ' ');
-            this.currentPosition = new int[]{x, y};
-            setInCoordinate(x, y, PLAYER.symbol());
-            checkUserSurroundings(x, y);
-        }
+        return new int[]{x,y};
     }
 
-    private void checkUserSurroundings(int x, int y) {
-        List<int[]> surroundings = new ArrayList<>();
-        surroundings.add(new int[]{x, y + 1});
-        surroundings.add(new int[]{x, y - 1});
-        surroundings.add(new int[]{x - 1, y});
-        surroundings.add(new int[]{x + 1, y});
-
-        for (int[] item : surroundings) {
-            int col = item[0];
-            int row = item[1];
-
-            char itemInPosition = characterAtPosition(col, row);
-
-            for(Feature feature : Feature.values()){
-                if(itemInPosition == feature.symbol()){
-                 //return itemInPosition;
-                }
-            }
-        }
+    public char getCharacterAtPosition(int x, int y) {
+        return mapStructure.get(y).charAt(x);
     }
+
+    public void setCurrentPosition(int x, int y){
+        //remove player from previous position
+        setInCoordinate(currentPosition[0], currentPosition[1], ' ');
+        this.currentPosition = new int[]{x, y};
+        setInCoordinate(x, y, PLAYER.symbol());
+
+    }
+
+    public List<Integer> getExitCode(){
+        return new ArrayList<>(exitCode);
+    }
+
+    public int getRandomExitCodeDigit(){
+        int random = new Random().nextInt(codeShownToUser.size());
+        Integer digitFromCode = codeShownToUser.get(random);
+        codeShownToUser.remove(digitFromCode);
+        return digitFromCode;
+    }
+
+
+//    public void setUserPosition(String userInput) {
+//        int x = currentPosition[0];
+//        int y = currentPosition[1];
+//
+//        switch (userInput.toUpperCase()) {
+//            case "N":
+//                y -= 1;
+//                break;
+//
+//            case "E":
+//                x += 1;
+//                break;
+//
+//            case "S":
+//                y += 1;
+//                break;
+//
+//            case "W":
+//                x -= 1;
+//                break;
+//        }
+//
+//        if (!validPosition(x, y)) {
+//            System.out.println("Hmm.. there seems to be a wall there. Let's try a different route.");
+//        } else {
+//            setInCoordinate(currentPosition[0], currentPosition[1], ' ');
+//            this.currentPosition = new int[]{x, y};
+//            setInCoordinate(x, y, PLAYER.symbol());
+//           // checkUserSurroundings(x, y);
+//        }
+
+//    }
+//    private void checkUserSurroundings(int x, int y) {
+//        List<int[]> surroundings = new ArrayList<>();
+//        surroundings.add(new int[]{x, y + 1});
+//        surroundings.add(new int[]{x, y - 1});
+//        surroundings.add(new int[]{x - 1, y});
+//        surroundings.add(new int[]{x + 1, y});
+//
+//        for (int[] item : surroundings) {
+//            int col = item[0];
+//            int row = item[1];
+//
+//            char itemInPosition = characterAtPosition(col, row);
+//
+//            for(Feature feature : Feature.values()){
+//                if(itemInPosition == feature.symbol()){
+//                 //return itemInPosition;
+//                }
+//            }
+
+//        }
+
+//    }
+    private void generateRandomExitCode() {
+    for (int i =0; i < 4; i++){
+        int randomNumber = new Random().nextInt(9);
+        exitCode.add(randomNumber);
+        codeShownToUser.add(randomNumber);
+    }
+}
 
     private void setRoomPositions() {
         createRoomsBasedOnMap();
@@ -135,15 +184,6 @@ public class UserMap {
         }
     }
 
-    private boolean validPosition(int x, int y) {
-        boolean isValid = false;
-        char charCheck = mapStructure.get(y).charAt(x);
-
-        isValid = charCheck != WALL.symbol() && charCheck != HEADER.symbol();
-
-        return isValid;
-    }
-
     private void createRoomsBasedOnMap() {
         int amountOfRooms = (mapLength - 2) / (Room.roomLength + 2);
         for (int i = 0; i < amountOfRooms; i++) {
@@ -170,9 +210,5 @@ public class UserMap {
 
     private void setInCoordinate(int x, int y, char symbol) {
         mapStructure.get(y).setCharAt(x, symbol);
-    }
-
-    private char characterAtPosition(int x, int y) {
-        return mapStructure.get(y).charAt(x);
     }
 }
