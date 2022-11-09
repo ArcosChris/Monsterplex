@@ -22,12 +22,12 @@ public class Player extends Character {
     private Player(String name){
         setName(name);
         addWeapon(Weapon.STICK);
-        addTool(new Potion());
+        addTool(Potion.create());
     }
 
     //actions methods
     public void attack(Monster target) {
-        target.setHealth(target.health - currentWeapon.getDamage());
+        target.setHealth(target.getHealth() - currentWeapon.getDamage());
         MonsterType monsterAttacked = target.getMonsterType();
         System.out.printf("You attacked %s : %s current health: %s", monsterAttacked, monsterAttacked, target.getHealth());
         target.attack(this);
@@ -38,7 +38,9 @@ public class Player extends Character {
     }
 
     public void addWeapon(Weapon weapon){
-        weapons.add(weapon);
+        if(!weapons.contains(weapon)){
+            weapons.add(weapon);
+        }
     }
 
     public void addTool(Tool tool){
