@@ -28,7 +28,7 @@ public class Player extends Character {
     public void attack(Monster target) {
         target.setHealth(target.getHealth() - currentWeapon.getDamage());
         MonsterType monsterAttacked = target.getMonsterType();
-        System.out.printf("You attacked %s : %s current health: %s", monsterAttacked, monsterAttacked, target.getHealth());
+        System.out.printf("\nYou attacked the %s : %s's current health: %s\n", monsterAttacked, monsterAttacked, target.getHealth());
     }
 
     public void useTool(Tool tool) {
@@ -89,7 +89,7 @@ public class Player extends Character {
     public void setArmorHealth(double armourHealth) {
         if(armourHealth == 0){
             setHasArmor(false);
-            setArmorHealth(Armor.NO_ARMOR_HEALTH);
+            this.armorHealth = Armor.NO_ARMOR_HEALTH;
         }
         else {
             this.armorHealth = armourHealth;

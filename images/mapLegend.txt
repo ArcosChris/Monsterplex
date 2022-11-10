@@ -1,11 +1,13 @@
 
+
+
 O- You
-* - Key                          N
-M - Monster                      |
-W - Weapon                  W -- + -- E
-T - Tool                         |
-? - Riddle to Enter              S
-% - Locked Room
+* - Key
+M - Monster                      N
+W - Weapon                       |
+T - Tool                    W -- + -- E
+? - Riddle to Enter              |
+% - Locked Room                  S
 / - Open Room
 # - Picture
 + - Exit
