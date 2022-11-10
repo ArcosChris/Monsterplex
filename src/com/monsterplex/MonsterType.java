@@ -3,7 +3,6 @@ package com.monsterplex;
 import java.util.Random;
 
 public enum MonsterType {
-
     CYCLOPS("Cyclops"),
     GHOST("Ghost"),
     ZOMBIE("Zombie"),

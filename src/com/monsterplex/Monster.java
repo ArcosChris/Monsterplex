@@ -39,8 +39,8 @@ public class Monster extends Character{
     }
 
     static class Force {
-        private final static int MIN_FORCE = 5;
-        private final static int MAX_FORCE = 25;
+        private final static int MIN_FORCE = 1;
+        private final static int MAX_FORCE = 15;
 
         //method to return random force value between the min and max force
         public static int get() {
