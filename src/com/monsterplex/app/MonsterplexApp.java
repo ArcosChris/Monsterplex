@@ -36,12 +36,13 @@ public class MonsterplexApp {
         player = Player.create(name);
         playerMap = UserMap.create();
         printDirections();
-        Console.pause(500);
+        Console.pause(800);
         game();
 
         String input = prompter.prompt("\nWould you like to play again ? [Y]es or [N]\n", "[yYnN]", "\nInvalid entry\n");
         if("Y".equalsIgnoreCase(input)){
-            execute();
+            Console.clear();
+            new MonsterplexApp().execute();
         }
         Console.clear();
     }
