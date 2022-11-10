@@ -26,7 +26,7 @@ public class Armor implements Tool {
 
     @Override
     public String getDescription() {
-        return "Armor will protect you against attacks. so your health will not be affected";
+        return "Armor will protect you against attacks, your health will not be affected - On attack will decrease by 25%";
     }
 
     @Override

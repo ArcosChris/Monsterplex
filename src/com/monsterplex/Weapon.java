@@ -3,12 +3,12 @@ package com.monsterplex;
 import java.util.Random;
 
 public enum Weapon implements Inventory {
-    STICK("Stick", 20),
-    HAMMER("Hammer",30.00),
-    SWORD("Sword",20.00),
-    AXE("Axe", 30.00),
+    STICK("Stick", 20.0),
+    HAMMER("Hammer",30.0),
+    SWORD("Sword",20.0),
+    AXE("Axe", 30.0),
     KATANA("Katana", 20.0),
-    SHOVEL("Shovel",25);
+    SHOVEL("Shovel",25.0);
 
     private final String display;
     private final double damage;

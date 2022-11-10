@@ -21,11 +21,11 @@ public class Monster extends Character{
         if(target.hasArmor()){
             target.setArmorHealth(target.getArmorHealth() - Armor.armorDamage);
             System.out.printf("\n%s uses attack %s. Your armor health is now: %s\n" +
-                    "your health is still %s", getMonsterType(), randomAttack, target.getArmorHealth(), target.getHealth());
+                    "Your health is still %s\n", getMonsterType(), randomAttack, target.getArmorHealth(), target.getHealth());
         }
         else {
             target.setHealth(target.getHealth() - force);
-            System.out.printf("\n%s uses attack %s. Your health is now: %s", getMonsterType(), randomAttack, target.getHealth());
+            System.out.printf("%s uses attack %s. Your health is now: %s\n", getMonsterType(), randomAttack, target.getHealth());
         }
     }
 
@@ -35,12 +35,12 @@ public class Monster extends Character{
 
     @Override
     public String toString(){
-        return String.format("MonsterType: %s, Health: %s, TEST", getMonsterType(), getHealth());
+        return String.format("MonsterType: %s, Health: %s", getMonsterType(), getHealth());
     }
 
     static class Force {
-        private final static int MIN_FORCE = 1;
-        private final static int MAX_FORCE = 15;
+        private final static int MIN_FORCE = 5;
+        private final static int MAX_FORCE = 25;
 
         //method to return random force value between the min and max force
         public static int get() {
@@ -57,8 +57,7 @@ public class Monster extends Character{
         MACHETE("Machete"),
         CROSSBOW("Crossbow"),
         NUNCHUCKS("Nunchucks"),
-        SCYTHE("Scythe"),
-        THUNDER("Thunder");
+        SCYTHE("Scythe");
 
         private final String attackName;
 

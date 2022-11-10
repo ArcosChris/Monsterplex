@@ -8,6 +8,7 @@ import java.io.*;
 import java.lang.Character;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.SQLOutput;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
@@ -27,7 +28,7 @@ public class MonsterplexApp {
     private boolean gameIsOver = false;
     private boolean userWon = false;
     private LocalTime endTime;
-    private int timeToComplete = 10;
+    private final int timeToComplete = 10;
 
 
     public void execute() {
@@ -76,9 +77,12 @@ public class MonsterplexApp {
                 case "E":
                 case "S":
                 case "W":
-                    Console.pause(500);
                     Console.clear();
                     userSwitchPosition(input);
+                    if(!gameIsOver && !player.isDead() && !isTimeRemaining())
+                    {
+                        playerMap.show();
+                    }
                     break;
                 case "I":
                     printUserInventory();
@@ -88,8 +92,8 @@ public class MonsterplexApp {
             }
         }
 
-        Console.clear();
-        Console.pause(500);
+        //Console.clear();
+        Console.pause(3000);
         if (userWon) {
             //win message
             System.out.println("YOU WON!!!!!!!");
@@ -100,13 +104,10 @@ public class MonsterplexApp {
         }
         else if(player.isDead()){
             System.out.println("DEAD");
-
         }
     }
 
     private void userSwitchPosition(String direction) {
-        Console.clear();
-
         int[] nextPosition = playerMap.getNextCoordinates(direction);
         int x = nextPosition[0];
         int y = nextPosition[1];
@@ -118,13 +119,12 @@ public class MonsterplexApp {
             if (userCompleted) {
                 playerMap.setCurrentPosition(x, y);
             }
-        } else {
+        }
+        else {
             playerMap.setCurrentPosition(x, y);
         }
         int[] playerPosition = playerMap.getPlayerPosition();
         checkForMonsters(playerPosition[0], playerPosition[1]);
-
-        playerMap.show();
     }
 
     private void checkForMonsters(int x, int y) {
@@ -166,25 +166,27 @@ public class MonsterplexApp {
         while (!monster.isDead() && !player.isDead()) {
             monster.attack(player);
 
-            String userInput = prompter.prompt("\n[A]ttack \n[C]hange Weapon\n\nSelect option: ", "[aAcC]", "\nNot valid comand.\n");
+            String userInput = prompter.prompt("\n[A]ttack \n[I]Inventory\n\nSelect option: ", "[aAiI]", "\nNot valid comand.\n");
             switch (userInput.toUpperCase()) {
                 case "A":
                     player.attack(monster);
                     break;
-                case "C":
+                case "I":
                     printUserInventory();
                     break;
             }
         }
         if (monster.isDead()) {
             playerWon = true;
-            //print congrat message
+            System.out.printf("You successfully killed %s, your current health is: %s\n", monster.getMonsterType(), player.getHealth());
+            System.out.println("Monster is dead!");
         } else {
             System.out.println("You are dead");
         }
 
-
-        return false;
+        Console.pause(2000);
+        Console.clear();
+        return playerWon;
     }
 
     //feature methods
@@ -220,7 +222,7 @@ public class MonsterplexApp {
                 break;
 
             case EXIT:
-                completed = attemptExit();
+                attemptExit();
                 break;
 
             case HEADER:
@@ -284,11 +286,15 @@ public class MonsterplexApp {
                 if (itemSelected instanceof Weapon) {
                     Weapon weapon = (Weapon) itemSelected;
                     player.setCurrentWeapon(weapon);
-                } else if (itemSelected instanceof Tool) {
+                    System.out.printf("Ahh yes, the %s. Good choice.\n", weapon.getDisplay());
+                }
+                else if (itemSelected instanceof Tool) {
                     Tool tool = (Tool) itemSelected;
                     player.useTool(tool);
+                    System.out.printf("This %s should be helpful with all the monsters running around.", tool.getClass().getSimpleName());
                 }
-                Console.pause(1500);
+                Console.pause(2000);
+                Console.clear();
                 break;
             case "E":
                 break;
@@ -312,10 +318,10 @@ public class MonsterplexApp {
         Weapon randomWeapon = Weapon.getRandomWeapon();
 
         if (player.getUserInventory().contains(randomWeapon)) {
-            System.out.printf("\nLooks like you already have a %s. This wont be useful to you.", randomWeapon);
+            System.out.printf("Looks like you already have a %s. This wont be useful to you.\n", randomWeapon);
         } else {
             player.addWeapon(randomWeapon);
-            System.out.printf("\nNew weapon added to inventory: %s\n", randomWeapon);
+            System.out.printf("New weapon added to inventory: %s\n", randomWeapon);
 
         }
     }
@@ -330,7 +336,7 @@ public class MonsterplexApp {
             newTool = Armor.create();
         }
 
-        System.out.printf("\nWoohoo! New %s added to inventory.\n", newTool.getClass().getSimpleName());
+        System.out.printf("Woohoo! New %s added to inventory.\n", newTool.getClass().getSimpleName());
         player.addTool(newTool);
     }
 
@@ -348,7 +354,7 @@ public class MonsterplexApp {
 
     private boolean inspectPicture() {
         boolean completed = false;
-        System.out.println("Cool a picture! Should we check it out?");
+        System.out.println("Cool, a picture! Should we check it out?");
         String input = prompter.prompt("\n[I]nspect Picture \n[E]xit\n\nSelect option: ", "[ieIE]", "\nThat's not valid.\n");
 
         switch (input.toUpperCase()) {
@@ -380,20 +386,18 @@ public class MonsterplexApp {
         }
     }
 
-    private boolean attemptExit() {
-        boolean completed = false;
+    private void attemptExit() {
         if (attemptsToExit == 0) {
             System.out.println("You have had enough tries! Goodbye forever.");
             player.setHealth(0);
         } else {
-            System.out.printf("\n You have %s attempts left.", attemptsToExit);
+            System.out.printf("You have %s attempts left.", attemptsToExit);
             System.out.println("Please enter 4 digit code to exit. Order does not matter.");
             String userAttempt = prompter.prompt("Code: ", "\\d{1,4}", "\nNot valid input code MUST be 4 digits\n");
 
             boolean isValidCode = verifyCode(userAttempt);
 
             if (isValidCode) {
-                completed = true;
                 gameIsOver = true;
                 userWon = true;
                 System.out.println("I think you got it!");
@@ -402,9 +406,8 @@ public class MonsterplexApp {
                 System.out.printf("\nYou have %s attempts left\n", attemptsToExit);
             }
         }
-
-
-        return completed;
+        Console.pause(2000);
+        Console.clear();
     }
 
     private boolean verifyCode(String userInput) {

@@ -94,9 +94,4 @@ class Room {
             e.printStackTrace();
         }
     }
-
-    private static boolean isFeatureAdded() {
-        return Math.random() < 0.5;
-    }
-
 }
