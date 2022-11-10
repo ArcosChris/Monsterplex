@@ -1,2 +1,6 @@
 # Monsterplex
-Java mini-project for TLG cohort
+
+Project Team 
+* Chris A. (owner) 
+* Hitesh A. (collaborator) 
+* John R. (collaborator) 
