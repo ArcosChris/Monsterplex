@@ -15,7 +15,7 @@ public class Clock {
     public LocalTime start() {
         startTime = now();
         endTime   = startTime.plusMinutes(minutes);
-        return endTime;  // for convenience, if the client wants it, else client can ignore it
+        return endTime;
     }
 
     public String timeRemainingAsString() {
@@ -26,18 +26,18 @@ public class Clock {
         long minutes = totalSeconds / 60;
         long seconds = totalSeconds - (minutes * 60);
 
+        String minutesString = String.valueOf(minutes);
         String secondsString = String.valueOf(seconds);
         if (seconds < 10) {
             secondsString = "0" + secondsString;  // 09 for 9 seconds
         }
-        return String.valueOf(minutes + ":" + secondsString);
+        return String.format("%s minutes and %s seconds",minutesString, secondsString);
     }
 
     public boolean isTimeRemaining() {
         return now().isBefore(endTime);
     }
 
-    // that "withNano(0)" shit is annoying all the time
     private static LocalTime now() {
         return LocalTime.now().withNano(0);
     }

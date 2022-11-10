@@ -60,17 +60,8 @@ class Room {
     }
 
     private void addFeatures() {
-        boolean add = false;
         for (Feature feature : roomFeatures()) {
-
-            if(feature.equals(MONSTER) && isLocked){
-                add = false;
-            }
-            else if(hasFeature() || feature.equals(PICTURE) || feature.equals(MONSTER)){
-                add = true;
-            }
-
-            if(add){
+            if (hasFeature() || feature.equals(PICTURE) || feature.equals(MONSTER)) {
                 addFeaturesToRoom(feature);
             }
         }
