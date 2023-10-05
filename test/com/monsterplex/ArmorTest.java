@@ -1,9 +1,9 @@
 package com.monsterplex;
 
+import com.monsterplex.game.Armor;
+import com.monsterplex.game.Player;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.sql.Date;
 
 import static org.junit.Assert.*;
 

@@ -1,4 +1,4 @@
-package com.monsterplex;
+package com.monsterplex.game;
 
 import java.util.Random;
 
@@ -38,7 +38,7 @@ public class Monster extends Character{
         return String.format("MonsterType: %s, Health: %s", getMonsterType(), getHealth());
     }
 
-    static class Force {
+    public static class Force {
         private final static int MIN_FORCE = 1;
         private final static int MAX_FORCE = 15;
 

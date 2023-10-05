@@ -1,4 +1,4 @@
-package com.monsterplex;
+package com.monsterplex.game;
 
 public class Potion implements Tool {
 

@@ -1,6 +1,9 @@
 package com.monsterplex;
 
-import org.junit.Before;
+import com.monsterplex.game.Armor;
+import com.monsterplex.game.Character;
+import com.monsterplex.game.Monster;
+import com.monsterplex.game.Player;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

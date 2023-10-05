@@ -4,9 +4,8 @@ import java.util.Random;
 
 public class Randomizer {
 
-    public static int randomPosition(int restriction1){
+    public static int randomPosition(int bound){
         Random rand = new Random();
-        return rand.nextInt(restriction1);
+        return rand.nextInt(bound);
     }
-
 }

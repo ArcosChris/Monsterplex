@@ -1,4 +1,4 @@
-package com.monsterplex;
+package com.monsterplex.game;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +53,8 @@ public class Riddle {
                 new Riddle(9L, "Which word in the dictionary is spelled incorrectly?", "incorrectly"),
                 new Riddle(10L, "What has a head and a tail, but no body or legs?", "coin"),
                 new Riddle(11L, "What color can you eat?", "orange")
-                ));
+
+        ));
 
         public static Riddle getRandomRiddle() {
             int randomRiddle = new Random().nextInt(riddleList.size());

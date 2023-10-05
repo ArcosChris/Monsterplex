@@ -1,14 +1,13 @@
 package com.monsterplex.app;
 
-import com.apps.util.Console;
-import com.apps.util.Prompter;
-import com.monsterplex.*;
+import com.monsterplex.game.Character;
+import com.monsterplex.game.*;
 import com.monsterplex.util.Clock;
+import com.monsterplex.util.Console;
+import com.monsterplex.util.FileHelper;
+import com.monsterplex.util.Prompter;
 
 import java.io.IOException;
-import java.lang.Character;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -30,7 +29,7 @@ public class MonsterplexApp {
     private final Clock clock = new Clock(timeToComplete);
 
 
-    public void execute() {
+    public void execute() throws IOException {
         welcome();
         String name = promptUserForName();
         player = Player.create(name);
@@ -47,8 +46,8 @@ public class MonsterplexApp {
         Console.clear();
     }
 
-    private void welcome() {
-        printFile("images/MonsterplexArt.txt");
+    private void welcome() throws IOException {
+        FileHelper.loadAndPrint("MonsterplexArt.txt");
     }
 
     private String promptUserForName() {
@@ -63,7 +62,7 @@ public class MonsterplexApp {
         }
     }
 
-    private void game() {
+    private void game() throws IOException {
         Console.clear();
         clock.start();
         System.out.println("Your timer has started... Good luck! ");
@@ -99,15 +98,15 @@ public class MonsterplexApp {
 
         if (userWon) {
             //win message
-           printFile("images/YouWin.txt");
+           FileHelper.loadAndPrint("YouWin.txt");
         } else if (!clock.isTimeRemaining()) {
-            printFile("images/timeisUp.txt");
+            FileHelper.loadAndPrint("timeisUp.txt");
         } else if (player.isDead()) {
-            printFile("images/Dead.txt");
+            FileHelper.loadAndPrint("Dead.txt");
         }
     }
 
-    private void userSwitchPosition(String direction) {
+    private void userSwitchPosition(String direction) throws IOException {
         int[] nextPosition = playerMap.getNextCoordinates(direction);
         int x = nextPosition[0];
         int y = nextPosition[1];
@@ -201,7 +200,7 @@ public class MonsterplexApp {
         return Feature.getFeatureBySymbol(symbol) != null;
     }
 
-    private boolean getFeaturePrompt(char symbol) {
+    private boolean getFeaturePrompt(char symbol) throws IOException {
         boolean completed = false;
         Feature feature = Feature.getFeatureBySymbol(symbol);
 
@@ -303,7 +302,7 @@ public class MonsterplexApp {
                 } else if (itemSelected instanceof Tool) {
                     Tool tool = (Tool) itemSelected;
                     player.useTool(tool);
-                    if (player.getHealth() != com.monsterplex.Character.MAX_HEALTH) {
+                    if (player.getHealth() != Character.MAX_HEALTH) {
                         System.out.printf("This %s should be helpful with all the monsters running around.\n", tool.getClass().getSimpleName());
                     }
                 }
@@ -366,7 +365,7 @@ public class MonsterplexApp {
         return completed;
     }
 
-    private boolean inspectPicture() {
+    private boolean inspectPicture() throws IOException {
         boolean completed = false;
         System.out.println("Cool, a picture! Should we check it out?");
         String input = prompter.prompt("\n[I]nspect Picture \n[E]xit\n\nSelect option: ", "[ieIE]", "\nThat's not valid.\n");
@@ -384,21 +383,13 @@ public class MonsterplexApp {
         return completed;
     }
 
-    private void printDigitPicture(int imageNumber) {
+    private void printDigitPicture(int imageNumber) throws IOException {
         String pictureNumToString = Integer.toString(imageNumber);
-        String fileName = String.format("images/numbers/image%s.txt", pictureNumToString);
-        printFile(fileName);
+        String fileName = String.format("numbers/image%s.txt", pictureNumToString);
+        FileHelper.loadAndPrint(fileName);
         System.out.println("I would write this down somewhere if I were you.");
         Console.pause(3000L);
         Console.clear();
-    }
-
-    private void printFile(String fileName) {
-        try {
-            System.out.println(Files.readString(Path.of(fileName)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private void attemptExit() {
@@ -434,7 +425,7 @@ public class MonsterplexApp {
 
 
         for (char codeDigit : input) {
-            userAttempt.add(Character.getNumericValue(codeDigit));
+            userAttempt.add(java.lang.Character.getNumericValue(codeDigit));
         }
 
         Collections.sort(mapExitCode);

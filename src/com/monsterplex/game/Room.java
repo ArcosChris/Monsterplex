@@ -1,4 +1,6 @@
-package com.monsterplex;
+package com.monsterplex.game;
+
+import com.monsterplex.util.FileHelper;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,8 +10,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import static com.monsterplex.Feature.*;
-import static com.monsterplex.Feature.roomFeatures;
+import static com.monsterplex.game.Feature.*;
+import static com.monsterplex.game.Feature.roomFeatures;
 
 class Room {
     private static int nextId = 1;
@@ -79,8 +81,7 @@ class Room {
 
     private void initialize() {
         try {
-            Files.lines(Path.of("images/room.txt"))
-                    .forEach(line -> roomStructure.add(new StringBuilder(line)));
+            roomStructure.addAll(FileHelper.readFileToStringBuilderArrayList("room.txt"));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -3,7 +3,7 @@ package com.monsterplex;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import static com.monsterplex.Monster.*;
+import static com.monsterplex.game.Monster.*;
 
 public class ForceTest {
 

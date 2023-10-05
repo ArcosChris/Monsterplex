@@ -1,4 +1,4 @@
-package com.monsterplex;
+package com.monsterplex.game;
 
 public abstract class Character {
     public static final double  MIN_HEALTH = 0;

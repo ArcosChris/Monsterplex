@@ -1,9 +1,12 @@
 package com.monsterplex;
 
+import com.monsterplex.game.Inventory;
+import com.monsterplex.game.Player;
+import com.monsterplex.game.Potion;
+import com.monsterplex.game.Weapon;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;

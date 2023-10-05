@@ -1,7 +1,5 @@
-package com.monsterplex;
+package com.monsterplex.game;
 
-
-import java.util.ArrayList;
 
 public class Armor implements Tool {
     public static final double armorDamage = 25.0;

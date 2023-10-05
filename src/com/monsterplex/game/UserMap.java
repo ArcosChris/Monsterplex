@@ -1,15 +1,18 @@
-package com.monsterplex;
+package com.monsterplex.game;
 
+import com.monsterplex.game.Feature;
+import com.monsterplex.game.Room;
+import com.monsterplex.util.FileHelper;
 import com.monsterplex.util.Randomizer;
-import com.monsterplex.util.Reader;
 
+import java.io.IOException;
 import java.util.*;
 
-import static com.monsterplex.Feature.*;
+import static com.monsterplex.game.Feature.*;
 
 public class UserMap {
-    private final List<StringBuilder> mapStructure = Reader.readFileToArrayList("images/map.txt");
-    private final List<StringBuilder> legend = Reader.readFileToArrayList("images/mapLegend.txt");
+    private final List<StringBuilder> mapStructure = FileHelper.readFileToStringBuilderArrayList("map.txt");
+    private final List<StringBuilder> legend = FileHelper.readFileToStringBuilderArrayList("mapLegend.txt");
     private final List<Room> rooms = new ArrayList<>();
     private final int mapLength = mapStructure.get(0).length();
     private final int mapWidth = mapStructure.size();
@@ -17,11 +20,11 @@ public class UserMap {
     private final List<Integer> codeShownToUser = new ArrayList<>();
     private int[] currentPosition = new int[]{1, mapStructure.size() - 2};
 
-    public static UserMap create(){
+    public static UserMap create() throws IOException {
         return new UserMap();
     }
 
-    private UserMap() {
+    private UserMap() throws IOException {
         generateRandomExitCode();
         setMapLegendItems();
         setRoomPositions();

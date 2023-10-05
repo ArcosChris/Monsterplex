@@ -1,5 +1,6 @@
 package com.monsterplex;
 
+import com.monsterplex.game.Player;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

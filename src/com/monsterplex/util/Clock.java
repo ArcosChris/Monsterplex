@@ -5,17 +5,15 @@ import java.time.LocalTime;
 
 public class Clock {
     private final int minutes;
-    private LocalTime startTime;
     private LocalTime endTime;
 
     public Clock(int minutes) {
         this.minutes = minutes;
     }
 
-    public LocalTime start() {
-        startTime = now();
-        endTime   = startTime.plusMinutes(minutes);
-        return endTime;
+    public void start() {
+        LocalTime startTime = now();
+        endTime = startTime.plusMinutes(minutes);
     }
 
     public String timeRemainingAsString() {
